@@ -7,154 +7,437 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<style>
+  :root{
+    --ivory:#F7F2E9;
+    --card:#FFFDF8;
+    --ink:#201B15;
+    --ink-soft:#5B5344;
+    --sage:#6B6F47;
+    --sage-deep:#4E5236;
+    --leather:#9C6B3E;
+    --wheat:#D8B46A;
+    --line: rgba(32,27,21,0.14);
+    --max: 1160px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--ivory); color:var(--ink);
+    font-family:'Karla', sans-serif; font-size:17px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block; max-width:100%;}
+  .photo{width:100%; height:100%; object-fit:cover; filter:saturate(0.95) contrast(1.02);}
+  a{color:inherit;}
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:600; line-height:1.06; margin:0; letter-spacing:-0.01em;}
+  .eyebrow{font-family:'Karla', sans-serif; font-weight:700; font-size:12.5px; letter-spacing:0.18em; text-transform:uppercase; color:var(--leather);}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+  :focus-visible{outline:2px solid var(--wheat); outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- HEADER ---------- */
+  .site-header{
+    position:fixed; top:0; left:0; right:0; z-index:200;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 28px;
+    transition:background .35s ease, padding .35s ease, box-shadow .35s ease;
+  }
+  .site-header.is-scrolled{
+    background:rgba(247,242,233,0.95);
+    backdrop-filter:blur(8px);
+    box-shadow:0 1px 0 var(--line);
+    padding:14px 28px;
+  }
+  .logo-link{display:flex; align-items:center;}
+  .logo-mark{height:64px; width:auto; transition:height .35s ease, filter .35s ease; filter:brightness(0) invert(1);}
+  .site-header.is-scrolled .logo-mark{height:46px; filter:none;}
+
+  #mainNav{display:flex; align-items:center; gap:34px;}
+  #mainNav a{
+    text-decoration:none; font-weight:700; font-size:14px; letter-spacing:0.03em;
+    color:#fff; opacity:0.92; transition:opacity .2s, color .2s;
+    padding-bottom:3px; border-bottom:1px solid transparent;
+  }
+  #mainNav a:hover{opacity:1; border-bottom-color:currentColor;}
+  .site-header.is-scrolled #mainNav a{color:var(--ink);}
+  #mainNav a.nav-cta{
+    background:#fff; color:var(--ink) !important; opacity:1;
+    padding:11px 20px; border-radius:2px; border-bottom:none;
+  }
+  #mainNav a.nav-cta:hover{background:var(--wheat);}
+  .site-header.is-scrolled #mainNav a.nav-cta{background:var(--ink); color:var(--ivory) !important;}
+  .site-header.is-scrolled #mainNav a.nav-cta:hover{background:var(--sage-deep);}
+
+  .nav-toggle{
+    display:none; background:none; border:0; cursor:pointer;
+    font-size:26px; line-height:1; color:#fff; padding:4px;
+  }
+  .site-header.is-scrolled .nav-toggle{color:var(--ink);}
+
+  @media (max-width:860px){
+    .nav-toggle{display:block;}
+    #mainNav{
+      display:none;
+    }
+    #mainNav.open{
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px;
+      position:fixed; inset:0; background:var(--ink); z-index:300;
+    }
+    #mainNav.open a{color:#fff; font-size:22px;}
+    #mainNav.open a.nav-cta{background:var(--wheat); color:var(--ink) !important;}
+  }
+
+  /* ---------- HERO (the one big image moment) ---------- */
+  .hero{
+    position:relative; min-height:100svh; width:100%;
+    display:flex; align-items:flex-end;
+    overflow:hidden; color:#fff;
+  }
+  .hero-img{position:absolute; inset:0; width:100%; height:100%;}
+  .hero-overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,17,12,0.15) 0%, rgba(20,17,12,0.1) 40%, rgba(20,17,12,0.72) 100%);
+  }
+  .hero-content{position:relative; z-index:2; padding:0 28px 88px; max-width:720px;}
+  .hero-content .eyebrow{color:var(--wheat);}
+  .hero-content h1{font-size:clamp(38px, 6.4vw, 68px); margin-top:16px; color:#fff;}
+  .hero-content p{color:rgba(255,255,255,0.9); font-size:18px; margin-top:18px; max-width:52ch;}
+  .hero-content .btn{margin-top:30px;}
+
+  .btn{
+    display:inline-block; text-decoration:none; font-weight:700; font-size:14.5px;
+    padding:16px 30px; border-radius:2px; transition:background .2s, transform .2s;
+  }
+  .btn-light{background:#fff; color:var(--ink);}
+  .btn-light:hover{background:var(--wheat); transform:translateY(-1px);}
+  .btn-dark{background:var(--ink); color:var(--ivory);}
+  .btn-dark:hover{background:var(--sage-deep); transform:translateY(-1px);}
+
+  /* ---------- FENCE DIVIDER ---------- */
+  .fence{width:100%; height:28px; display:block;}
+  .fence .rail{stroke:var(--wheat); stroke-width:2;}
+  .fence .rail2{stroke:var(--leather); stroke-width:1.5; opacity:0.55;}
+
+  /* ---------- VERSE ---------- */
+  .verse{text-align:center; padding:72px 28px 64px; max-width:720px; margin:0 auto;}
+  .verse p{font-family:'Fraunces', serif; font-style:italic; font-weight:500; font-size:clamp(20px,2.4vw,26px);}
+  .verse cite{display:block; margin-top:14px; font-style:normal; font-weight:700; font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--leather);}
+
+  section.content{padding:20px 28px 96px;}
+  .section-head{max-width:640px; margin:0 auto 48px; text-align:center;}
+  .section-head h2{font-size:clamp(28px,3.8vw,40px); margin-top:12px;}
+  .section-head p{color:var(--ink-soft); margin-top:16px;}
+
+  /* ---------- ABOUT (editorial split) ---------- */
+  .about{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:0.95fr 1.05fr; gap:60px; align-items:center;}
+  .about-photo{aspect-ratio:4/5; border:1px solid var(--line); padding:8px; background:var(--card);}
+  .about-photo .frame{width:100%; height:100%; overflow:hidden;}
+  .about-story h2{font-size:clamp(28px,3.6vw,38px);}
+  .about-story p{color:var(--ink-soft); margin-top:18px;}
+  .values-list{list-style:none; margin:28px 0 0; padding:0; border-top:1px solid var(--line);}
+  .values-list li{
+    padding:15px 0; border-bottom:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    font-family:'Fraunces', serif; font-weight:500; font-size:18px;
+  }
+  .values-list li span{font-family:'Karla', sans-serif; font-weight:400; font-size:14px; color:var(--ink-soft); text-align:right; max-width:52%;}
+
+  /* ---------- EXPERIENCES ---------- */
+  .exp-grid{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .exp-card{background:var(--card); display:flex; flex-direction:column;}
+  .exp-photo{aspect-ratio:5/4; overflow:hidden;}
+  .exp-body{padding:28px 26px 32px; display:flex; flex-direction:column; flex-grow:1;}
+  .exp-top{display:flex; justify-content:space-between; align-items:center;}
+  .exp-price{font-family:'Fraunces', serif; font-weight:600; font-size:14px; color:var(--sage-deep);}
+  .exp-card h3{font-size:22px; margin-top:14px;}
+  .exp-card p.exp-desc{color:var(--ink-soft); font-size:15px; margin-top:10px; flex-grow:1;}
+  .exp-meta{list-style:none; margin:18px 0 0; padding:14px 0 0; border-top:1px solid var(--line); font-size:13.5px; color:var(--ink-soft);}
+  .exp-meta li{padding:3px 0;}
+  .exp-meta li::before{content:"— "; color:var(--wheat); font-weight:700;}
+
+  /* ---------- PROPERTY ---------- */
+  .prop-grid{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:repeat(2,1fr); column-gap:56px;}
+  .prop-list{list-style:none; margin:0; padding:0;}
+  .prop-list li{padding:13px 0; border-bottom:1px solid var(--line); display:flex; gap:14px; align-items:flex-start; font-size:15px;}
+  .prop-list li::before{content:""; flex:0 0 auto; width:8px; height:8px; margin-top:6px; background:var(--wheat); transform:rotate(45deg);}
+
+  /* ---------- GALLERY (little section) ---------- */
+  .gallery-grid{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
+  .gallery-grid a{display:block; aspect-ratio:1/1; overflow:hidden;}
+  .gallery-grid img{transition:transform .5s ease;}
+  .gallery-grid a:hover img{transform:scale(1.06);}
+
+  /* ---------- FUTURE ---------- */
+  .tag-row{max-width:var(--max); margin:0 auto; display:flex; flex-wrap:wrap; gap:12px; justify-content:center;}
+  .tag-row span{border:1px solid var(--line); padding:11px 20px; border-radius:999px; font-size:14px; font-weight:600; color:var(--ink-soft);}
+
+  /* ---------- VISIT ---------- */
+  .visit-card{max-width:520px; margin:0 auto; background:var(--card); border:1px solid var(--line); padding:40px;}
+  .visit-card h3{font-size:23px;}
+  .visit-row{display:flex; justify-content:space-between; gap:20px; padding:15px 0; border-top:1px solid var(--line); font-size:15px;}
+  .visit-row:first-of-type{margin-top:20px;}
+  .visit-row dt{color:var(--ink-soft); font-weight:700; letter-spacing:0.03em; font-size:12px; text-transform:uppercase;}
+  .visit-row dd{margin:0; text-align:right; font-weight:600;}
+  .visit-btns{display:flex; gap:12px; margin-top:24px; flex-wrap:wrap; justify-content:center;}
+  .visit-note{font-size:13px; color:var(--ink-soft); margin-top:18px; font-style:italic; text-align:center;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:48px 24px 40px; text-align:center; color:var(--ink-soft); font-size:13.5px; border-top:1px solid var(--line);}
+  footer .logo-mark{height:38px; margin:0 auto 14px; filter:none;}
+  footer .contact-line{margin-bottom:16px;}
+  footer .contact-line a{text-decoration:none; font-weight:700; color:var(--ink);}
+  footer nav{display:flex; flex-wrap:wrap; gap:18px; justify-content:center;}
+  footer nav a{text-decoration:none; font-weight:700; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink);}
+
+  section[id]{scroll-margin-top:90px;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .about{grid-template-columns:1fr; gap:32px;}
+    .exp-grid{grid-template-columns:1fr;}
+    .prop-grid{grid-template-columns:1fr; row-gap:0;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    section.content{padding:16px 20px 64px;}
+    .hero-content{padding-bottom:64px;}
+    .visit-card{padding:28px;}
+  }
+</style>
 </head>
 <body>
 
 <header class="site-header" id="siteHeader">
-  <div class="header-inner">
-    <a href="index.html" class="logo-plate">
-      <img class="logo-mark" src="1000023288.png" alt="Yahweh Arena — Equestrian &amp; Event Venue">
-    </a>
-    <nav class="main-nav" id="mainNav">
-      <a href="index.html" aria-current="page">Home</a>
-      <a href="about.html">About</a>
-      <a href="experiences.html">Experiences</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="visit.html" class="nav-cta">Plan Your Visit</a>
-    </nav>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
-  </div>
+  <a href="#" class="logo-link">
+    <img class="logo-mark" src="1000023288.png" alt="Yahweh Arena — Equestrian &amp; Event Venue">
+  </a>
+  <nav id="mainNav">
+    <a href="#about">About</a>
+    <a href="#experiences">Experiences</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#visit" class="nav-cta">Plan Your Visit</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
 </header>
 
 <!-- HERO -->
-<section class="image-band hero-band fade-base">
-  <img class="band-img photo" src="1000023092.jpg" alt="A rider on horseback inside the Yahweh Arena indoor riding arena">
-  <div class="band-overlay"></div>
-  <div class="band-content">
+<section class="hero">
+  <img class="hero-img photo" src="1000023089.jpg" alt="Horses grazing in the pasture at Yahweh Arena at dusk">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
     <div class="eyebrow">Long Prairie, Minnesota</div>
-    <h1>Gather.<br>Celebrate.<br>Ride.</h1>
-    <p>A countryside arena and event venue built for weddings, gatherings, and riders of every season — under one roof, come rain, shine, or snow.</p>
-    <div class="band-actions">
-      <a class="btn btn-light" href="visit.html">Plan Your Visit</a>
-      <a class="btn btn-outline" href="experiences.html">See What's Here</a>
-    </div>
+    <h1>A Peaceful Place to Gather</h1>
+    <p>An indoor arena and event venue built for weddings, riding, and the moments that bring people together — set on quiet Minnesota countryside.</p>
+    <a class="btn btn-light" href="#visit">Plan Your Visit</a>
   </div>
 </section>
 
-<!-- SCRIPTURE -->
+<!-- VERSE -->
 <div class="verse">
   <p>"Commit to the Lord whatever you do, and He will establish your plans."</p>
   <cite>Proverbs 16:3</cite>
 </div>
 
-<svg class="fence" viewBox="0 0 1200 30" preserveAspectRatio="none" aria-hidden="true">
+<svg class="fence" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true">
   <line class="rail" x1="0" y1="9" x2="1200" y2="9"/>
   <line class="rail2" x1="0" y1="19" x2="1200" y2="19"/>
 </svg>
 
-<!-- ABOUT TEASER BAND -->
-<section class="image-band section-band">
-  <img class="band-img photo" src="1000023089.jpg" alt="Horses grazing in the pasture at Yahweh Arena at dusk">
-  <div class="band-overlay"></div>
-  <div class="band-content">
-    <div class="eyebrow">Our Story</div>
-    <h2>Built on Faith. Raised Around Horses.</h2>
-    <p>What started as a love for horses grew into a countryside destination for community — one arena, one event, one ride at a time.</p>
-    <div class="band-actions">
-      <a class="btn btn-light" href="about.html">Read Our Story</a>
+<!-- ABOUT -->
+<section class="content" id="about">
+  <div class="about">
+    <div class="about-photo">
+      <div class="frame">
+        <img class="photo" src="1000023096.jpg" alt="Outdoor round pen at Yahweh Arena under a clear blue sky">
+      </div>
+    </div>
+    <div class="about-story">
+      <div class="eyebrow">Our Story</div>
+      <h2>Built With Faith, and a Love for Horses</h2>
+      <p>Yahweh Arena began with a simple conviction: that a peaceful stretch of Minnesota countryside could become a place where people gather, celebrate, and grow — together. What started as a love for horses grew into a destination built for community, one arena, one event, one ride at a time.</p>
+      <p>We believe every good gift comes from God, and we're grateful for the chance to share this place. Whether you're here to say "I do," host a family reunion, learn to ride, or simply enjoy the quiet of the countryside, our hope is that you leave encouraged.</p>
+      <ul class="values-list">
+        <li>Faith First <span>The foundation everything is built on</span></li>
+        <li>Hospitality <span>Every guest welcomed like family</span></li>
+        <li>Stewardship <span>Caring well for this land and these horses</span></li>
+        <li>Excellence <span>Details that make an event unforgettable</span></li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- EXPERIENCES TEASER -->
-<section class="content">
+<svg class="fence" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true">
+  <line class="rail" x1="0" y1="9" x2="1200" y2="9"/>
+  <line class="rail2" x1="0" y1="19" x2="1200" y2="19"/>
+</svg>
+
+<!-- EXPERIENCES -->
+<section class="content" id="experiences">
   <div class="section-head">
     <div class="eyebrow">What's Here</div>
     <h2>Three Ways to Experience Yahweh Arena</h2>
     <p>Whether you're planning a milestone event or just want to ride, there's a place for you here.</p>
   </div>
-  <div class="card-grid">
-    <a class="teaser-card" href="experiences.html#venue">
-      <div class="teaser-photo"><img class="photo" src="1000023101.jpg" alt="Exterior of the Yahweh Arena event venue building"></div>
-      <div class="teaser-body">
-        <span class="eyebrow">Venue</span>
+  <div class="exp-grid">
+    <div class="exp-card">
+      <div class="exp-photo"><img class="photo" src="1000023101.jpg" alt="Exterior of the Yahweh Arena event venue building"></div>
+      <div class="exp-body">
+        <div class="exp-top"><span class="eyebrow">Venue</span></div>
         <h3>Venue Rentals</h3>
-        <p>Weddings, receptions, and gatherings for up to 200 guests.</p>
-        <div class="teaser-arrow">Explore Venue →</div>
+        <p class="exp-desc">Weddings, receptions, church gatherings, corporate retreats, family reunions, and more — hosted in an arena built to hold your biggest moments.</p>
+        <ul class="exp-meta">
+          <li>Seats approximately 200 guests</li>
+          <li>Large parking area &amp; RV accommodations</li>
+          <li>Outside vendors and catering welcome</li>
+          <li>Alcohol permitted with county permits</li>
+        </ul>
       </div>
-    </a>
-    <a class="teaser-card" href="experiences.html#ride">
-      <div class="teaser-photo"><img class="photo" src="1000023097.jpg" alt="Inside the spacious indoor riding arena at Yahweh Arena"></div>
-      <div class="teaser-body">
-        <span class="teaser-price">$15 / rider</span>
+    </div>
+    <div class="exp-card">
+      <div class="exp-photo"><img class="photo" src="1000023097.jpg" alt="Inside the spacious indoor riding arena at Yahweh Arena"></div>
+      <div class="exp-body">
+        <div class="exp-top"><span class="eyebrow">Riding</span><span class="exp-price">$15 / rider</span></div>
         <h3>Indoor Open Ride</h3>
-        <p>Ride comfortably, every season, seven days a week.</p>
-        <div class="teaser-arrow">Explore Riding →</div>
+        <p class="exp-desc">Ride comfortably through every Minnesota season in a spacious, well-ventilated indoor arena — protected from snow, heat, and bugs alike.</p>
+        <ul class="exp-meta">
+          <li>Open 7 days a week</li>
+          <li>Excellent ventilation, year-round comfort</li>
+          <li>Accommodates approximately 10 horses</li>
+        </ul>
       </div>
-    </a>
-    <a class="teaser-card" href="experiences.html#clinics">
-      <div class="teaser-photo"><img class="photo" src="1000023039.jpg" alt="Rider's-eye view from the saddle during a horsemanship clinic"></div>
-      <div class="teaser-body">
-        <span class="teaser-price">$175 / rider</span>
+    </div>
+    <div class="exp-card">
+      <div class="exp-photo"><img class="photo" src="1000023039.jpg" alt="Rider's-eye view from the saddle during a horsemanship clinic"></div>
+      <div class="exp-body">
+        <div class="exp-top"><span class="eyebrow">Instruction</span><span class="exp-price">$175 / rider</span></div>
         <h3>Horsemanship Clinics</h3>
-        <p>Hands-on instruction to build real skill and confidence.</p>
-        <div class="teaser-arrow">Explore Clinics →</div>
+        <p class="exp-desc">Hands-on clinics built to grow real confidence and skill in the saddle, led by instructors who care about doing it right.</p>
+        <ul class="exp-meta">
+          <li>Three sessions, four riders per session</li>
+          <li>Professional instruction &amp; riding exercises</li>
+          <li>Lunch and drink bar included</li>
+        </ul>
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
-<svg class="fence" viewBox="0 0 1200 30" preserveAspectRatio="none" aria-hidden="true">
+<!-- PROPERTY -->
+<section class="content" id="property">
+  <div class="section-head">
+    <div class="eyebrow">The Property</div>
+    <h2>A Place Made for Every Season</h2>
+    <p>Set on peaceful countryside acreage, the arena was designed for comfort, capacity, and flexibility — for horses and guests alike.</p>
+  </div>
+  <div class="prop-grid">
+    <ul class="prop-list">
+      <li>Large indoor riding arena with excellent ventilation</li>
+      <li>Comfortable riding year-round, with minimal bugs in warmer months</li>
+      <li>Full snow and weather protection</li>
+      <li>Seating capacity of approximately 200 guests</li>
+    </ul>
+    <ul class="prop-list">
+      <li>Room for approximately 10 horses in the arena</li>
+      <li>Large parking area and RV accommodations</li>
+      <li>Restrooms on site</li>
+      <li>Outside vendors, catering, and permitted alcohol welcome</li>
+    </ul>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="content" id="gallery">
+  <div class="section-head">
+    <div class="eyebrow">A Look Around</div>
+    <h2>Gallery</h2>
+  </div>
+  <div class="gallery-grid">
+    <a href="1000023092.jpg" target="_blank" rel="noopener"><img class="photo" src="1000023092.jpg" alt="Rider inside the indoor arena"></a>
+    <a href="1000023093.jpg" target="_blank" rel="noopener"><img class="photo" src="1000023093.jpg" alt="RV parked on site at dusk"></a>
+    <a href="1000023096.jpg" target="_blank" rel="noopener"><img class="photo" src="1000023096.jpg" alt="Outdoor round pen under a clear sky"></a>
+    <a href="1000023101.jpg" target="_blank" rel="noopener"><img class="photo" src="1000023101.jpg" alt="Exterior of the venue building"></a>
+  </div>
+</section>
+
+<svg class="fence" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true">
   <line class="rail" x1="0" y1="9" x2="1200" y2="9"/>
   <line class="rail2" x1="0" y1="19" x2="1200" y2="19"/>
 </svg>
 
-<!-- GALLERY TEASER -->
-<section class="content">
+<!-- FUTURE -->
+<section class="content" style="padding-top:56px;">
   <div class="section-head">
-    <div class="eyebrow">A Look Around</div>
-    <h2>The Property</h2>
-    <p>A few glimpses of the arena, the grounds, and the horses who call it home.</p>
+    <div class="eyebrow">Growing With Purpose</div>
+    <h2>What's Coming Next</h2>
+    <p>As Yahweh Arena grows, so does our hope for what this place can offer the community around it.</p>
   </div>
-  <div class="gallery-grid teaser">
-    <a href="gallery.html"><img class="photo" src="1000023096.jpg" alt="Outdoor round pen at Yahweh Arena"></a>
-    <a href="gallery.html"><img class="photo" src="1000023093.jpg" alt="RV parked on site at Yahweh Arena at dusk"></a>
-    <a href="gallery.html"><img class="photo" src="1000023097.jpg" alt="Indoor arena with obstacles set up"></a>
-    <a href="gallery.html"><img class="photo" src="1000023089.jpg" alt="Horses grazing in the pasture"></a>
-  </div>
-  <div style="text-align:center; margin-top:36px;">
-    <a class="btn btn-dark" href="gallery.html">View Full Gallery</a>
+  <div class="tag-row">
+    <span>Equine-Assisted Therapy</span>
+    <span>Riding Lessons</span>
+    <span>Youth Camps</span>
+    <span>Women's Retreats</span>
+    <span>Faith-Based Retreats</span>
+    <span>Community Outreach</span>
+    <span>Educational Workshops</span>
   </div>
 </section>
 
-<!-- FINAL CTA BAND -->
-<section class="image-band section-band">
-  <img class="band-img photo" src="1000023101.jpg" alt="Exterior of the Yahweh Arena event venue building">
-  <div class="band-overlay"></div>
-  <div class="band-content">
+<!-- VISIT -->
+<section class="content" id="visit">
+  <div class="section-head">
     <div class="eyebrow">Come See It Yourself</div>
     <h2>Ready to Gather Here?</h2>
-    <p>28319 285th Ave, Long Prairie, MN — call to schedule your visit or talk through your event.</p>
-    <div class="band-actions">
-      <a class="btn btn-light" href="tel:+12182328377">Call (218) 232-8377</a>
-      <a class="btn btn-outline" href="visit.html">Visit Details</a>
+    <p>Call to schedule your visit or talk through your event — we'd love to walk the property with you.</p>
+  </div>
+  <div class="visit-card">
+    <h3>Visit Yahweh Arena</h3>
+    <dl>
+      <div class="visit-row"><dt>Address</dt><dd>28319 285th Ave<br>Long Prairie, MN</dd></div>
+      <div class="visit-row"><dt>Phone</dt><dd><a href="tel:+12182328377" style="text-decoration:none;">(218) 232-8377</a></dd></div>
+      <div class="visit-row"><dt>Open Ride</dt><dd>7 days a week · $15/rider</dd></div>
+    </dl>
+    <div class="visit-btns">
+      <a class="btn btn-dark" href="tel:+12182328377">Call to Schedule</a>
+      <a class="btn" style="border:1.5px solid var(--line); color:var(--ink);" href="https://www.google.com/maps/search/?api=1&query=28319+285th+Ave+Long+Prairie+MN" target="_blank" rel="noopener">Get Directions</a>
     </div>
+    <p class="visit-note">Call to schedule a visit or ask about booking your event.</p>
   </div>
 </section>
 
 <footer>
   <img class="logo-mark" src="1000023288.png" alt="Yahweh Arena">
-  <div>28319 285th Ave, Long Prairie, Minnesota &nbsp;·&nbsp; <a class="tel" href="tel:+12182328377">(218) 232-8377</a></div>
+  <div class="contact-line">28319 285th Ave, Long Prairie, Minnesota &nbsp;·&nbsp; <a href="tel:+12182328377">(218) 232-8377</a></div>
   <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="experiences.html">Experiences</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="visit.html">Visit</a>
+    <a href="#about">About</a>
+    <a href="#experiences">Experiences</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#visit">Visit</a>
   </nav>
 </footer>
 
-<script src="script.js"></script>
+<script>
+  var header = document.getElementById('siteHeader');
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+
+  window.addEventListener('scroll', function () {
+    header.classList.toggle('is-scrolled', window.scrollY > 30);
+  }, { passive: true });
+
+  toggle.addEventListener('click', function () {
+    var isOpen = nav.classList.toggle('open');
+    toggle.textContent = isOpen ? '✕' : '☰';
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  nav.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      nav.classList.remove('open');
+      toggle.textContent = '☰';
+    });
+  });
+</script>
+
 </body>
 </html>
