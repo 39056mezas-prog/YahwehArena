@@ -184,6 +184,22 @@
   .visit-btns{display:flex; gap:12px; margin-top:24px; flex-wrap:wrap; justify-content:center;}
   .visit-note{font-size:13px; color:var(--ink-soft); margin-top:18px; font-style:italic; text-align:center;}
 
+  /* ---------- CONTACT FORM ---------- */
+  .contact-card{max-width:520px; margin:20px auto 0; background:var(--card); border:1px solid var(--line); padding:40px;}
+  .contact-card h3{font-size:23px; margin-bottom:6px;}
+  .contact-card .eyebrow{display:block; margin-bottom:8px;}
+  .contact-form{margin-top:22px; display:flex; flex-direction:column; gap:14px;}
+  .contact-form input, .contact-form textarea{
+    width:100%; padding:14px 16px; border:1px solid var(--line); background:var(--ivory);
+    font-family:'Karla', sans-serif; font-size:15px; color:var(--ink); border-radius:2px;
+  }
+  .contact-form input:focus, .contact-form textarea:focus{outline:2px solid var(--wheat); outline-offset:1px;}
+  .contact-form textarea{min-height:120px; resize:vertical;}
+  .contact-form button{cursor:pointer; border:none; margin-top:4px;}
+  .form-status{font-size:14px; margin-top:10px; text-align:center; min-height:20px;}
+  .form-status.success{color:var(--sage-deep); font-weight:700;}
+  .form-status.error{color:#a13d2e; font-weight:700;}
+
   /* ---------- FOOTER ---------- */
   footer{padding:48px 24px 40px; text-align:center; color:var(--ink-soft); font-size:13.5px; border-top:1px solid var(--line);}
   footer .logo-mark{height:38px; margin:0 auto 14px; filter:none;}
@@ -395,6 +411,7 @@
     <dl>
       <div class="visit-row"><dt>Address</dt><dd>28319 285th Ave<br>Long Prairie, MN</dd></div>
       <div class="visit-row"><dt>Phone</dt><dd><a href="tel:+12182328377" style="text-decoration:none;">(218) 232-8377</a></dd></div>
+      <div class="visit-row"><dt>Email</dt><dd><a href="mailto:arenayahweh@gmail.com" style="text-decoration:none;">arenayahweh@gmail.com</a></dd></div>
       <div class="visit-row"><dt>Open Ride</dt><dd>7 days a week · $15/rider</dd></div>
     </dl>
     <div class="visit-btns">
@@ -403,11 +420,27 @@
     </div>
     <p class="visit-note">Call to schedule a visit or ask about booking your event.</p>
   </div>
+
+  <div class="contact-card">
+    <span class="eyebrow">Or Send a Message</span>
+    <h3>We'll Get Back to You</h3>
+    <form id="contactForm" class="contact-form">
+      <input type="hidden" name="access_key" value="29419777-08a3-41c6-a496-9688bf505bed">
+      <input type="hidden" name="subject" value="New inquiry from the Yahweh Arena website">
+      <input type="hidden" name="from_name" value="Yahweh Arena Website">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="email" name="email" placeholder="Your email" required>
+      <input type="tel" name="phone" placeholder="Phone (optional)">
+      <textarea name="message" placeholder="Tell us about your event or question" required></textarea>
+      <button type="submit" class="btn btn-dark">Send Message</button>
+      <p class="form-status" id="formStatus"></p>
+    </form>
+  </div>
 </section>
 
 <footer>
   <img class="logo-mark" src="1000023288.png" alt="Yahweh Arena">
-  <div class="contact-line">28319 285th Ave, Long Prairie, Minnesota &nbsp;·&nbsp; <a href="tel:+12182328377">(218) 232-8377</a></div>
+  <div class="contact-line">28319 285th Ave, Long Prairie, Minnesota &nbsp;·&nbsp; <a href="tel:+12182328377">(218) 232-8377</a> &nbsp;·&nbsp; <a href="mailto:arenayahweh@gmail.com">arenayahweh@gmail.com</a></div>
   <nav>
     <a href="#about">About</a>
     <a href="#experiences">Experiences</a>
@@ -437,6 +470,47 @@
       toggle.textContent = '☰';
     });
   });
+
+  var contactForm = document.getElementById('contactForm');
+  var formStatus = document.getElementById('formStatus');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var submitBtn = contactForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      formStatus.textContent = '';
+      formStatus.className = 'form-status';
+
+      var data = new FormData(contactForm);
+      var payload = Object.fromEntries(data);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (result) {
+          if (result.success) {
+            formStatus.textContent = "Thanks! We'll be in touch soon.";
+            formStatus.classList.add('success');
+            contactForm.reset();
+          } else {
+            formStatus.textContent = 'Something went wrong. Please call us instead.';
+            formStatus.classList.add('error');
+          }
+        })
+        .catch(function () {
+          formStatus.textContent = 'Something went wrong. Please call us instead.';
+          formStatus.classList.add('error');
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        });
+    });
+  }
 </script>
 
 </body>
