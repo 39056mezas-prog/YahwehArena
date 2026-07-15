@@ -40,7 +40,7 @@
 
   /* ---------- HEADER ---------- */
   .site-header{
-    position:fixed; top:0; left:0; right:0; z-index:200;
+    position:fixed; top:0; left:0; right:0; z-index:500;
     display:flex; align-items:center; justify-content:space-between;
     padding:22px 28px;
     transition:background .35s ease, padding .35s ease, box-shadow .35s ease;
@@ -51,6 +51,9 @@
     box-shadow:0 1px 0 var(--line);
     padding:14px 28px;
   }
+  .site-header.menu-open{background:transparent !important; box-shadow:none !important;}
+  .site-header.menu-open .logo-mark{filter:brightness(0) invert(1) !important; height:64px !important;}
+  .site-header.menu-open .nav-toggle{color:#fff !important;}
   .logo-link{display:flex; align-items:center;}
   .logo-mark{height:64px; width:auto; transition:height .35s ease, filter .35s ease; filter:brightness(0) invert(1);}
   .site-header.is-scrolled .logo-mark{height:46px; filter:none;}
@@ -77,6 +80,7 @@
   }
   .site-header.is-scrolled .nav-toggle{color:var(--ink);}
 
+  .nav-close-btn{display:none;}
   @media (max-width:860px){
     .nav-toggle{display:block;}
     #mainNav{
@@ -84,11 +88,17 @@
     }
     #mainNav.open{
       display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px;
-      position:fixed; inset:0; background:var(--ink); z-index:300;
+      position:fixed; inset:0; background:var(--ink); z-index:400;
     }
     #mainNav.open a{color:#fff; font-size:22px;}
     #mainNav.open a.nav-cta{background:var(--wheat); color:var(--ink) !important;}
+    #mainNav.open .nav-close-btn{
+      display:block; position:absolute; top:20px; right:24px;
+      background:none; border:1.5px solid rgba(255,255,255,0.5); border-radius:999px;
+      width:44px; height:44px; color:#fff; font-size:20px; cursor:pointer; z-index:401;
+    }
   }
+  body.nav-locked{overflow:hidden;}
 
   /* ---------- HERO (the one big image moment) ---------- */
   .hero{
@@ -99,7 +109,9 @@
   .hero-img{position:absolute; inset:0; width:100%; height:100%;}
   .hero-overlay{
     position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(20,17,12,0.15) 0%, rgba(20,17,12,0.1) 40%, rgba(20,17,12,0.72) 100%);
+    background:
+      radial-gradient(ellipse at center, rgba(20,17,12,0) 0%, rgba(20,17,12,0.35) 100%),
+      linear-gradient(180deg, rgba(20,17,12,0.42) 0%, rgba(20,17,12,0.38) 35%, rgba(20,17,12,0.88) 100%);
   }
   .hero-content{position:relative; z-index:2; padding:0 28px 88px; max-width:720px;}
   .hero-content .eyebrow{color:var(--wheat);}
@@ -108,13 +120,24 @@
   .hero-content .btn{margin-top:30px;}
 
   .btn{
-    display:inline-block; text-decoration:none; font-weight:700; font-size:14.5px;
-    padding:16px 30px; border-radius:2px; transition:background .2s, transform .2s;
+    display:inline-flex; align-items:center; gap:10px;
+    text-decoration:none; font-weight:800; font-size:13.5px; letter-spacing:0.07em; text-transform:uppercase;
+    padding:18px 32px; border-radius:2px; transition:background .2s, transform .2s, box-shadow .2s;
+    box-shadow:0 8px 22px rgba(0,0,0,0.18);
   }
+  .btn::after{content:"→"; font-size:15px; transition:transform .2s;}
+  .btn:hover::after{transform:translateX(3px);}
   .btn-light{background:#fff; color:var(--ink);}
-  .btn-light:hover{background:var(--wheat); transform:translateY(-1px);}
+  .btn-light:hover{background:var(--wheat); transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,0.24);}
   .btn-dark{background:var(--ink); color:var(--ivory);}
-  .btn-dark:hover{background:var(--sage-deep); transform:translateY(-1px);}
+  .btn-dark:hover{background:var(--leather); transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,0.3);}
+  .btn-accent{background:var(--leather); color:#fff;}
+  .btn-accent:hover{background:#7E5730; transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,0.3);}
+  .btn-outline{background:transparent; border:1.5px solid rgba(32,27,21,0.35); color:var(--ink); box-shadow:none;}
+  .btn-outline:hover{background:rgba(32,27,21,0.06); transform:translateY(-2px);}
+  .btn-outline::after{display:none;}
+  .btn-outline.on-dark{border-color:rgba(255,255,255,0.5); color:#fff;}
+  .btn-outline.on-dark:hover{background:rgba(255,255,255,0.1);}
 
   /* ---------- FENCE DIVIDER ---------- */
   .fence{width:100%; height:28px; display:block;}
@@ -170,6 +193,28 @@
   .gallery-grid img{transition:transform .5s ease;}
   .gallery-grid a:hover img{transform:scale(1.06);}
 
+  /* ---------- DARK SECTION MODIFIER ---------- */
+  .section-dark{
+    background:radial-gradient(ellipse at top, #2A2318 0%, #1C170F 70%);
+    color:var(--ivory);
+  }
+  .section-dark .eyebrow{color:var(--wheat);}
+  .section-dark h2{color:#fff;}
+  .section-dark .section-head p{color:rgba(247,242,233,0.68);}
+  .section-dark .prop-list li{color:rgba(247,242,233,0.88); border-bottom-color:rgba(247,242,233,0.14);}
+  .section-dark .prop-list li::before{background:var(--wheat);}
+  .section-dark .tag-row span{border-color:rgba(247,242,233,0.28); color:rgba(247,242,233,0.82);}
+
+  /* subtle depth on cards */
+  .exp-grid, .about-photo, .visit-card, .contact-card{box-shadow:0 14px 40px rgba(32,27,21,0.10);}
+
+  /* film-grain texture, applied site-wide */
+  .grain{
+    position:fixed; inset:0; z-index:9000; pointer-events:none;
+    opacity:0.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
   /* ---------- FUTURE ---------- */
   .tag-row{max-width:var(--max); margin:0 auto; display:flex; flex-wrap:wrap; gap:12px; justify-content:center;}
   .tag-row span{border:1px solid var(--line); padding:11px 20px; border-radius:999px; font-size:14px; font-weight:600; color:var(--ink-soft);}
@@ -223,12 +268,14 @@
 </style>
 </head>
 <body>
+<div class="grain" aria-hidden="true"></div>
 
 <header class="site-header" id="siteHeader">
   <a href="#" class="logo-link">
     <img class="logo-mark" src="1000023288.png" alt="Yahweh Arena — Equestrian &amp; Event Venue">
   </a>
   <nav id="mainNav">
+    <button type="button" id="navCloseBtn" class="nav-close-btn" aria-label="Close menu">✕</button>
     <a href="#about">About</a>
     <a href="#experiences">Experiences</a>
     <a href="#gallery">Gallery</a>
@@ -245,7 +292,7 @@
     <div class="eyebrow">Long Prairie, Minnesota</div>
     <h1>A Peaceful Place to Gather</h1>
     <p>An indoor arena and event venue built for weddings, riding, and the moments that bring people together — set on quiet Minnesota countryside.</p>
-    <a class="btn btn-light" href="#visit">Plan Your Visit</a>
+    <a class="btn btn-accent" href="#visit">Plan Your Visit</a>
   </div>
 </section>
 
@@ -340,7 +387,7 @@
 </section>
 
 <!-- PROPERTY -->
-<section class="content" id="property">
+<section class="content section-dark" id="property">
   <div class="section-head">
     <div class="eyebrow">The Property</div>
     <h2>A Place Made for Every Season</h2>
@@ -382,7 +429,7 @@
 </svg>
 
 <!-- FUTURE -->
-<section class="content" style="padding-top:56px;">
+<section class="content section-dark" style="padding-top:56px;">
   <div class="section-head">
     <div class="eyebrow">Growing With Purpose</div>
     <h2>What's Coming Next</h2>
@@ -415,8 +462,8 @@
       <div class="visit-row"><dt>Open Ride</dt><dd>7 days a week · $15/rider</dd></div>
     </dl>
     <div class="visit-btns">
-      <a class="btn btn-dark" href="tel:+12182328377">Call to Schedule</a>
-      <a class="btn" style="border:1.5px solid var(--line); color:var(--ink);" href="https://www.google.com/maps/search/?api=1&query=28319+285th+Ave+Long+Prairie+MN" target="_blank" rel="noopener">Get Directions</a>
+      <a class="btn btn-accent" href="tel:+12182328377">Call to Schedule</a>
+      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=28319+285th+Ave+Long+Prairie+MN" target="_blank" rel="noopener">Get Directions</a>
     </div>
     <p class="visit-note">Call to schedule a visit or ask about booking your event.</p>
   </div>
@@ -432,7 +479,7 @@
       <input type="email" name="email" placeholder="Your email" required>
       <input type="tel" name="phone" placeholder="Phone (optional)">
       <textarea name="message" placeholder="Tell us about your event or question" required></textarea>
-      <button type="submit" class="btn btn-dark">Send Message</button>
+      <button type="submit" class="btn btn-accent" style="justify-content:center; width:100%;">Send Message</button>
       <p class="form-status" id="formStatus"></p>
     </form>
   </div>
@@ -453,22 +500,43 @@
   var header = document.getElementById('siteHeader');
   var toggle = document.getElementById('navToggle');
   var nav = document.getElementById('mainNav');
+  var navClose = document.getElementById('navCloseBtn');
 
   window.addEventListener('scroll', function () {
-    header.classList.toggle('is-scrolled', window.scrollY > 30);
+    if (!nav.classList.contains('open')) {
+      header.classList.toggle('is-scrolled', window.scrollY > 30);
+    }
   }, { passive: true });
 
+  function openMenu() {
+    nav.classList.add('open');
+    header.classList.add('menu-open');
+    document.body.classList.add('nav-locked');
+    toggle.textContent = '✕';
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMenu() {
+    nav.classList.remove('open');
+    header.classList.remove('menu-open');
+    document.body.classList.remove('nav-locked');
+    toggle.textContent = '☰';
+    toggle.setAttribute('aria-expanded', 'false');
+    header.classList.toggle('is-scrolled', window.scrollY > 30);
+  }
+
   toggle.addEventListener('click', function () {
-    var isOpen = nav.classList.toggle('open');
-    toggle.textContent = isOpen ? '✕' : '☰';
-    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    if (nav.classList.contains('open')) { closeMenu(); } else { openMenu(); }
   });
 
+  if (navClose) { navClose.addEventListener('click', closeMenu); }
+
   nav.querySelectorAll('a').forEach(function (link) {
-    link.addEventListener('click', function () {
-      nav.classList.remove('open');
-      toggle.textContent = '☰';
-    });
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('open')) { closeMenu(); }
   });
 
   var contactForm = document.getElementById('contactForm');
