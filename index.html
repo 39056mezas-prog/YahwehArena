@@ -174,8 +174,8 @@
   .torn-top{top:0; clip-path:polygon(0 0,100% 0,100% 55%,96% 100%,92% 60%,88% 95%,84% 50%,80% 100%,76% 65%,72% 90%,68% 45%,64% 100%,60% 55%,56% 90%,52% 40%,48% 100%,44% 60%,40% 95%,36% 50%,32% 100%,28% 65%,24% 90%,20% 45%,16% 100%,12% 55%,8% 90%,4% 40%,0% 100%);}
   .torn-bottom{bottom:0; clip-path:polygon(0 100%,100% 100%,100% 45%,96% 0%,92% 40%,88% 5%,84% 50%,80% 0%,76% 35%,72% 10%,68% 55%,64% 0%,60% 45%,56% 10%,52% 60%,48% 0%,44% 40%,40% 5%,36% 50%,32% 0%,28% 35%,24% 10%,20% 55%,16% 0%,12% 45%,8% 10%,4% 60%,0% 0%);}
   .verse-logo-bg{
-    position:absolute; top:20px; left:50%; transform:translateX(-50%) rotate(-2deg);
-    width:520px; max-width:150%; opacity:0.12; mix-blend-mode:multiply;
+    position:absolute; top:-10px; right:-50px; left:auto; transform:rotate(-4deg);
+    width:420px; max-width:62%; opacity:0.13; mix-blend-mode:multiply;
     filter:grayscale(1) contrast(1.15); pointer-events:none; z-index:0;
   }
   .verse{position:relative; z-index:1; text-align:center; max-width:720px; margin:0 auto;}
@@ -228,9 +228,48 @@
 
   /* ---------- GALLERY ---------- */
   .gallery-grid{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
-  .gallery-grid a{display:block; aspect-ratio:1/1; overflow:hidden;}
-  .gallery-grid img{transition:transform .5s ease;}
-  .gallery-grid a:hover img{transform:scale(1.06);}
+  .gallery-item{position:relative; display:block; aspect-ratio:1/1; overflow:hidden; cursor:pointer; border:0; padding:0; background:none;}
+  .gallery-item img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease; filter:saturate(0.95) contrast(1.02);}
+  .gallery-item:hover img{transform:scale(1.06);}
+  .gallery-caption{
+    position:absolute; left:0; right:0; bottom:0; padding:20px 14px 10px;
+    background:linear-gradient(to top, rgba(20,17,12,0.75), transparent);
+    color:#fff; font-size:12.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; text-align:left;
+  }
+  .gallery-more{
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;
+    background:var(--card); border:1px dashed var(--line); color:var(--ink-soft);
+    font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;
+  }
+  .gallery-more svg{width:26px; height:26px; color:var(--wheat);}
+
+  /* lightbox */
+  .lightbox{
+    position:fixed; inset:0; z-index:900; display:none; align-items:center; justify-content:center;
+    background:rgba(10,8,6,0.92); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:88vw; max-height:80vh; object-fit:contain; box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+  .lightbox-close, .lightbox-prev, .lightbox-next{
+    position:absolute; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.35);
+    color:#fff; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    font-size:20px; transition:background .2s;
+  }
+  .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover{background:rgba(255,255,255,0.2);}
+  .lightbox-close{top:22px; right:22px; width:44px; height:44px;}
+  .lightbox-prev, .lightbox-next{top:50%; transform:translateY(-50%); width:52px; height:52px; font-size:26px;}
+  .lightbox-prev{left:16px;}
+  .lightbox-next{right:16px;}
+
+  /* ---------- FACEBOOK CALLOUT ---------- */
+  .fb-callout{
+    max-width:680px; margin:0 auto; background:var(--card); border:1px solid var(--line);
+    padding:40px; display:flex; align-items:center; gap:24px;
+  }
+  .fb-callout .fb-icon{flex:0 0 auto; width:52px; height:52px;}
+  .fb-callout h3{font-size:21px;}
+  .fb-callout p{color:var(--ink-soft); margin-top:6px; font-size:15px;}
+  .fb-callout .btn{margin-top:16px;}
 
   /* ---------- DARK SECTION MODIFIER ---------- */
   .section-dark{
@@ -242,6 +281,66 @@
   .section-dark .section-head p{color:rgba(247,242,233,0.68);}
   .section-dark .prop-list li{color:rgba(247,242,233,0.88); border-bottom-color:rgba(247,242,233,0.14);}
   .section-dark .prop-list li::before{background:var(--wheat);}
+
+  /* ---------- PROPERTY (winter feature) ---------- */
+  .section-winter{
+    position:relative; overflow:hidden;
+    background:radial-gradient(ellipse at top, #2E3B44 0%, #141C22 72%);
+    color:var(--ivory);
+  }
+  .section-winter .eyebrow{color:#9FD1E8;}
+  .section-winter h2{color:#fff;}
+  .section-winter .section-head p{color:rgba(247,242,233,0.7);}
+  .snow-layer{
+    position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0.85;
+    background-image:
+      radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 30% 60%, rgba(255,255,255,0.7) 50%, transparent 51%),
+      radial-gradient(2px 2px at 50% 30%, rgba(255,255,255,0.85) 50%, transparent 51%),
+      radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.6) 50%, transparent 51%),
+      radial-gradient(2.5px 2.5px at 85% 15%, rgba(255,255,255,0.9) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 15% 85%, rgba(255,255,255,0.7) 50%, transparent 51%),
+      radial-gradient(2px 2px at 60% 50%, rgba(255,255,255,0.8) 50%, transparent 51%),
+      radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.65) 50%, transparent 51%),
+      radial-gradient(2px 2px at 40% 10%, rgba(255,255,255,0.85) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 25% 40%, rgba(255,255,255,0.7) 50%, transparent 51%);
+    background-repeat:repeat; background-size:220px 260px;
+    animation:snowfall 16s linear infinite;
+  }
+  @keyframes snowfall{
+    from{background-position:0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;}
+    to{background-position:60px 260px, 40px 260px, 80px 260px, 30px 260px, 70px 260px, 50px 260px, 90px 260px, 35px 260px, 65px 260px, 45px 260px;}
+  }
+  @media (prefers-reduced-motion: reduce){ .snow-layer{animation:none;} }
+
+  .feature-hero{
+    position:relative; z-index:2; max-width:var(--max); margin:0 auto 20px;
+    background:rgba(255,255,255,0.05); border:1px solid rgba(247,242,233,0.16);
+    padding:40px; display:flex; align-items:center; gap:30px;
+  }
+  .feature-hero .icon-wrap{
+    flex:0 0 auto; width:76px; height:76px; border-radius:50%;
+    background:rgba(159,209,232,0.14); display:flex; align-items:center; justify-content:center;
+  }
+  .feature-hero .icon-wrap svg{width:38px; height:38px;}
+  .feature-hero .tag{
+    display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
+    color:#141C22; background:#9FD1E8; padding:5px 12px; border-radius:999px; margin-bottom:10px;
+  }
+  .feature-hero h3{font-size:24px; color:#fff;}
+  .feature-hero p{color:rgba(247,242,233,0.78); margin-top:10px; font-size:15.5px; max-width:60ch;}
+
+  .feature-grid{
+    position:relative; z-index:2; max-width:var(--max); margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:rgba(247,242,233,0.12);
+  }
+  .feature-tile{
+    background:rgba(20,28,34,0.55); padding:26px 24px; display:flex; gap:16px; align-items:flex-start;
+  }
+  .feature-tile svg{flex:0 0 auto; width:22px; height:22px; margin-top:2px; color:var(--wheat);}
+  .feature-tile h4{font-family:'Fraunces', serif; font-weight:600; font-size:15.5px; color:#fff; margin:0 0 4px;}
+  .feature-tile p{font-size:13.5px; color:rgba(247,242,233,0.7); margin:0; line-height:1.5;}
 
   /* subtle depth on cards */
   .exp-grid, .visit-card, .contact-card, .map-frame{box-shadow:0 14px 40px rgba(32,27,21,0.10);}
@@ -310,11 +409,11 @@
   footer .social-row{display:flex; justify-content:center; gap:12px; margin-bottom:22px;}
   footer .social-btn{
     display:inline-flex; align-items:center; justify-content:center;
-    width:40px; height:40px; border-radius:50%; border:1px solid rgba(247,242,233,0.3);
-    color:#fff; font-family:Georgia, serif; font-weight:700; font-size:18px;
-    text-decoration:none; transition:background .2s, color .2s, border-color .2s;
+    width:38px; height:38px; border-radius:50%; overflow:hidden;
+    transition:transform .2s, opacity .2s; opacity:0.9;
   }
-  footer .social-btn:hover{background:var(--wheat); color:var(--ink); border-color:var(--wheat);}
+  footer .social-btn:hover{transform:translateY(-2px); opacity:1;}
+  footer .social-btn svg{width:100%; height:100%;}
   footer nav{display:flex; flex-wrap:wrap; gap:18px; justify-content:center;}
   footer nav a{text-decoration:none; font-weight:700; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:rgba(247,242,233,0.82);}
   footer nav a:hover{color:#fff;}
@@ -331,6 +430,8 @@
     .hero-content{padding-bottom:64px;}
     .visit-card, .contact-card{padding:28px;}
     .verse-wrap{padding:76px 20px;}
+    .feature-hero{flex-direction:column; text-align:center; padding:30px;}
+    .feature-grid{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -427,26 +528,53 @@
   </div>
 </section>
 
-<!-- PROPERTY (amenities, dark) -->
-<section class="content section-dark" id="property">
+<!-- PROPERTY (the main highlight: indoor arena beats Minnesota winters) -->
+<section class="content section-winter" id="property">
+  <div class="snow-layer" aria-hidden="true"></div>
   <div class="section-head">
-    <div class="eyebrow">The Property</div>
-    <h2>A Place Made for Every Season</h2>
-    <p>Set on peaceful countryside acreage, the arena was designed for comfort, capacity, and flexibility — for horses and guests alike.</p>
+    <div class="eyebrow">Built for Minnesota</div>
+    <h2>Ride Through Every Minnesota Season</h2>
+    <p>When the snow flies, most arenas close for the season. Ours doesn't.</p>
   </div>
-  <div class="prop-grid">
-    <ul class="prop-list">
-      <li>Large indoor riding arena with excellent ventilation</li>
-      <li>Comfortable riding year-round, with minimal bugs in warmer months</li>
-      <li>Full snow and weather protection</li>
-      <li>Seating capacity of approximately 200 guests</li>
-    </ul>
-    <ul class="prop-list">
-      <li>Room for approximately 10 horses in the arena</li>
-      <li>Large parking area and RV accommodations</li>
-      <li>Restrooms on site</li>
-      <li>Outside vendors, catering, and permitted alcohol welcome</li>
-    </ul>
+
+  <div class="feature-hero">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#9FD1E8" stroke-width="1.6" stroke-linecap="round">
+        <path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11M12 2l-2 2M12 2l2 2M12 22l-2-2M12 22l2-2M4.5 6.5l2.7.3M4.5 6.5l.9-2.6M19.5 6.5l-2.7.3M19.5 6.5l-.9-2.6M4.5 17.5l2.7-.3M4.5 17.5l.9 2.6M19.5 17.5l-2.7-.3M19.5 17.5l-.9 2.6"/>
+      </svg>
+    </div>
+    <div>
+      <span class="tag">The Main Attraction</span>
+      <h3>Full Snow &amp; Weather Protection</h3>
+      <p>Our fully enclosed indoor arena means your horse never has to sit out a Minnesota winter. Excellent ventilation keeps it comfortable in summer too — with minimal bugs in the warmer months and zero snow days in the cold ones.</p>
+    </div>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-tile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 8c3 2 9 2 12 0M6 16c3-2 9-2 12 0"/></svg>
+      <div><h4>Excellent Ventilation</h4><p>Comfortable riding conditions year-round.</p></div>
+    </div>
+    <div class="feature-tile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="9" rx="1"/><path d="M8 9V6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3M8 18v2M16 18v2"/></svg>
+      <div><h4>Seats ~200 Guests</h4><p>Room for your biggest gatherings.</p></div>
+    </div>
+    <div class="feature-tile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c1-4 2-6 2-9a6 6 0 0 1 12 0c0 3 1 5 2 9M8 11h8"/></svg>
+      <div><h4>Room for 10 Horses</h4><p>Plenty of space to share the arena floor.</p></div>
+    </div>
+    <div class="feature-tile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16V9a1 1 0 0 1 1-1h13l4 4v4a1 1 0 0 1-1 1h-1"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M9 17h6"/></svg>
+      <div><h4>Parking &amp; RV Access</h4><p>Large lot with room for RVs and trailers.</p></div>
+    </div>
+    <div class="feature-tile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="1"/><circle cx="14.5" cy="12" r="0.8" fill="currentColor" stroke="none"/></svg>
+      <div><h4>Restrooms On Site</h4><p>Clean facilities, no port-a-potties.</p></div>
+    </div>
+    <div class="feature-tile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-1.5 9a4.5 4.5 0 0 1-9 0L6 3z"/><path d="M12 15v6M9 21h6"/></svg>
+      <div><h4>Vendors &amp; Catering</h4><p>Outside vendors welcome, alcohol permitted with county permits.</p></div>
+    </div>
   </div>
 </section>
 
@@ -454,13 +582,41 @@
 <section class="content" id="gallery">
   <div class="section-head">
     <div class="eyebrow">A Look Around</div>
-    <h2>Gallery</h2>
+    <h2>Take a Look Around</h2>
+    <p>A few glimpses of the arena, the grounds, and the horses who call it home — tap any photo for a closer look. More being added soon.</p>
   </div>
-  <div class="gallery-grid">
-    <a href="1000023092.jpg" target="_blank" rel="noopener"><img class="photo" src="1000023092.jpg" alt="Rider inside the indoor arena"></a>
-    <a href="1000023093.jpg" target="_blank" rel="noopener"><img class="photo" src="1000023093.jpg" alt="RV parked on site at dusk"></a>
-    <a href="1000023096.jpg" target="_blank" rel="noopener"><img class="photo" src="1000023096.jpg" alt="Outdoor round pen under a clear sky"></a>
-    <a href="1000023101.jpg" target="_blank" rel="noopener"><img class="photo" src="1000023101.jpg" alt="Exterior of the venue building"></a>
+  <div class="gallery-grid" id="galleryGrid">
+    <button type="button" class="gallery-item" data-full="1000023092.jpg" data-caption="Inside the Indoor Arena">
+      <img src="1000023092.jpg" alt="Rider inside the indoor arena">
+      <span class="gallery-caption">Indoor Arena</span>
+    </button>
+    <button type="button" class="gallery-item" data-full="1000023093.jpg" data-caption="RV Site at Dusk">
+      <img src="1000023093.jpg" alt="RV parked on site at dusk">
+      <span class="gallery-caption">RV Site</span>
+    </button>
+    <button type="button" class="gallery-item" data-full="1000023096.jpg" data-caption="The Outdoor Round Pen">
+      <img src="1000023096.jpg" alt="Outdoor round pen under a clear sky">
+      <span class="gallery-caption">Round Pen</span>
+    </button>
+    <button type="button" class="gallery-item" data-full="1000023101.jpg" data-caption="The Venue, Outside">
+      <img src="1000023101.jpg" alt="Exterior of the venue building">
+      <span class="gallery-caption">Venue Exterior</span>
+    </button>
+  </div>
+</section>
+
+<!-- FACEBOOK -->
+<section class="content" style="padding-top:8px;">
+  <div class="fb-callout">
+    <svg class="fb-icon" viewBox="0 0 48 48" aria-hidden="true">
+      <circle cx="24" cy="24" r="24" fill="#1877F2"/>
+      <path d="M30.5 24.5h-4v14h-5.5v-14h-3v-4.7h3v-3c0-3.6 1.8-6.3 6-6.3h4v4.7h-2.8c-1 0-1.7.6-1.7 1.9v2.7h4.5l-.5 4.7z" fill="#fff"/>
+    </svg>
+    <div>
+      <h3>Find Us on Facebook</h3>
+      <p>Follow along for new photos, upcoming events, and updates straight from the arena.</p>
+      <a class="btn btn-accent" href="https://www.facebook.com/share/14rPKS74vwC/" target="_blank" rel="noopener">Visit Our Page</a>
+    </div>
   </div>
 </section>
 
@@ -492,7 +648,10 @@
     </dl>
     <div class="visit-btns">
       <a class="btn btn-accent" href="tel:+12182328377">Call to Schedule</a>
-      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=28319+285th+Ave+Long+Prairie+MN" target="_blank" rel="noopener">Get Directions</a>
+      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=28319+285th+Ave+Long+Prairie+MN" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Get Directions
+      </a>
     </div>
     <p class="visit-note">Call to schedule a visit or ask about booking your event.</p>
   </div>
@@ -575,7 +734,12 @@
   <img class="logo-mark" src="1000023288.png" alt="Yahweh Arena">
   <div class="contact-line">28319 285th Ave, Long Prairie, Minnesota &nbsp;·&nbsp; <a href="tel:+12182328377">(218) 232-8377</a> &nbsp;·&nbsp; <a href="mailto:arenayahweh@gmail.com">arenayahweh@gmail.com</a></div>
   <div class="social-row">
-    <a class="social-btn" href="https://www.facebook.com/share/14rPKS74vwC/" target="_blank" rel="noopener" aria-label="Yahweh Arena on Facebook">f</a>
+    <a class="social-btn" href="https://www.facebook.com/share/14rPKS74vwC/" target="_blank" rel="noopener" aria-label="Yahweh Arena on Facebook">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="24" fill="#1877F2"/>
+        <path d="M30.5 24.5h-4v14h-5.5v-14h-3v-4.7h3v-3c0-3.6 1.8-6.3 6-6.3h4v4.7h-2.8c-1 0-1.7.6-1.7 1.9v2.7h4.5l-.5 4.7z" fill="#fff"/>
+      </svg>
+    </a>
   </div>
   <nav>
     <a href="#experiences">Experiences</a>
@@ -585,6 +749,13 @@
     <a href="#contact">Contact</a>
   </nav>
 </footer>
+
+<div class="lightbox" id="lightbox">
+  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <button type="button" class="lightbox-prev" id="lightboxPrev" aria-label="Previous photo">‹</button>
+  <img id="lightboxImg" src="" alt="">
+  <button type="button" class="lightbox-next" id="lightboxNext" aria-label="Next photo">›</button>
+</div>
 
 <script>
   var header = document.getElementById('siteHeader');
@@ -690,6 +861,49 @@
         });
     });
   }
+
+  var galleryItems = Array.prototype.slice.call(document.querySelectorAll('.gallery-item'));
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxClose = document.getElementById('lightboxClose');
+  var lightboxPrev = document.getElementById('lightboxPrev');
+  var lightboxNext = document.getElementById('lightboxNext');
+  var currentIndex = 0;
+
+  function showImage(index) {
+    currentIndex = (index + galleryItems.length) % galleryItems.length;
+    var item = galleryItems[currentIndex];
+    lightboxImg.src = item.getAttribute('data-full');
+    lightboxImg.alt = item.getAttribute('data-caption') || '';
+  }
+
+  galleryItems.forEach(function (item, index) {
+    item.addEventListener('click', function () {
+      showImage(index);
+      lightbox.classList.add('open');
+    });
+  });
+
+  if (lightboxClose) {
+    lightboxClose.addEventListener('click', function () { lightbox.classList.remove('open'); });
+  }
+  if (lightboxPrev) {
+    lightboxPrev.addEventListener('click', function () { showImage(currentIndex - 1); });
+  }
+  if (lightboxNext) {
+    lightboxNext.addEventListener('click', function () { showImage(currentIndex + 1); });
+  }
+  if (lightbox) {
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) { lightbox.classList.remove('open'); }
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') { lightbox.classList.remove('open'); }
+    if (e.key === 'ArrowLeft') { showImage(currentIndex - 1); }
+    if (e.key === 'ArrowRight') { showImage(currentIndex + 1); }
+  });
 </script>
 
 </body>
