@@ -10,6 +10,7 @@
 <style>
   :root{
     --ivory:#F7F2E9;
+    --parchment:#EEE2C6;
     --card:#FFFDF8;
     --ink:#201B15;
     --ink-soft:#5B5344;
@@ -42,7 +43,7 @@
   .site-header{
     position:fixed; top:0; left:0; right:0; z-index:500;
     display:flex; align-items:center; justify-content:space-between;
-    padding:22px 28px;
+    padding:20px 28px;
     transition:background .35s ease, padding .35s ease, box-shadow .35s ease;
   }
   .site-header.is-scrolled{
@@ -52,10 +53,10 @@
     padding:14px 28px;
   }
   .site-header.menu-open{background:transparent !important; box-shadow:none !important;}
-  .site-header.menu-open .logo-mark{filter:brightness(0) invert(1) !important; height:64px !important;}
+  .site-header.menu-open .logo-mark{filter:brightness(0) invert(1) !important; height:78px !important;}
   .site-header.menu-open .nav-toggle{color:#fff !important;}
   .logo-link{display:flex; align-items:center;}
-  .logo-mark{height:64px; width:auto; transition:height .35s ease, filter .35s ease; filter:brightness(0) invert(1);}
+  .logo-mark{height:78px; width:auto; transition:height .35s ease, filter .35s ease; filter:brightness(0) invert(1);}
   .site-header.is-scrolled .logo-mark{height:46px; filter:none;}
 
   #mainNav{display:flex; align-items:center; gap:34px;}
@@ -68,7 +69,8 @@
   .site-header.is-scrolled #mainNav a{color:var(--ink);}
   #mainNav a.nav-cta{
     background:#fff; color:var(--ink) !important; opacity:1;
-    padding:11px 20px; border-radius:2px; border-bottom:none;
+    padding:11px 22px; border-bottom:none;
+    clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
   }
   #mainNav a.nav-cta:hover{background:var(--wheat);}
   .site-header.is-scrolled #mainNav a.nav-cta{background:var(--ink); color:var(--ivory) !important;}
@@ -83,24 +85,55 @@
   .nav-close-btn{display:none;}
   @media (max-width:860px){
     .nav-toggle{display:block;}
-    #mainNav{
-      display:none;
-    }
+    #mainNav{display:none;}
     #mainNav.open{
-      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px;
-      position:fixed; inset:0; background:var(--ink); z-index:400;
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px;
+      position:fixed; inset:0; z-index:400;
+      background:rgba(20,17,12,0.66);
+      -webkit-backdrop-filter:blur(18px) saturate(120%);
+      backdrop-filter:blur(18px) saturate(120%);
     }
-    #mainNav.open a{color:#fff; font-size:22px;}
-    #mainNav.open a.nav-cta{background:var(--wheat); color:var(--ink) !important;}
+    #mainNav.open a{color:#fff; font-size:21px; text-shadow:0 2px 12px rgba(0,0,0,0.4);}
+    #mainNav.open a.nav-cta{background:var(--wheat); color:var(--ink) !important; text-shadow:none;}
     #mainNav.open .nav-close-btn{
       display:block; position:absolute; top:20px; right:24px;
-      background:none; border:1.5px solid rgba(255,255,255,0.5); border-radius:999px;
+      background:rgba(0,0,0,0.25); border:1.5px solid rgba(255,255,255,0.5); border-radius:999px;
       width:44px; height:44px; color:#fff; font-size:20px; cursor:pointer; z-index:401;
     }
   }
-  body.nav-locked{overflow:hidden;}
 
-  /* ---------- HERO (the one big image moment) ---------- */
+  /* ---------- BUTTONS (barn-door plank shape) ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    text-decoration:none; font-weight:800; font-size:13.5px; letter-spacing:0.07em; text-transform:uppercase;
+    padding:18px 34px; border:none; cursor:pointer;
+    transition:background-color .2s, transform .2s, box-shadow .2s;
+    box-shadow:0 8px 22px rgba(0,0,0,0.18), inset 0 -3px 0 rgba(0,0,0,0.18);
+    clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+  }
+  .btn::after{content:"→"; font-size:15px; transition:transform .2s;}
+  .btn:hover::after{transform:translateX(3px);}
+  .btn-light{background-color:#fff; color:var(--ink);}
+  .btn-light:hover{background-color:var(--wheat); transform:translateY(-2px);}
+  .btn-dark{
+    background-color:var(--ink); color:var(--ivory);
+    background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 9px);
+  }
+  .btn-dark:hover{background-color:var(--leather); transform:translateY(-2px);}
+  .btn-accent{
+    background-color:var(--leather); color:#fff;
+    background-image:
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.08) 0px, rgba(255,255,255,0.08) 2px, transparent 2px, transparent 9px),
+      repeating-linear-gradient(115deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 1px, transparent 9px);
+  }
+  .btn-accent:hover{background-color:#7E5730; transform:translateY(-2px);}
+  .btn-outline{background:transparent; border:1.5px solid rgba(32,27,21,0.35); color:var(--ink); box-shadow:none;}
+  .btn-outline:hover{background:rgba(32,27,21,0.06); transform:translateY(-2px);}
+  .btn-outline::after{display:none;}
+  .btn-outline.on-dark{border-color:rgba(255,255,255,0.5); color:#fff;}
+  .btn-outline.on-dark:hover{background:rgba(255,255,255,0.1);}
+
+  /* ---------- HERO ---------- */
   .hero{
     position:relative; min-height:100svh; width:100%;
     display:flex; align-items:flex-end;
@@ -119,33 +152,22 @@
   .hero-content p{color:rgba(255,255,255,0.9); font-size:18px; margin-top:18px; max-width:52ch;}
   .hero-content .btn{margin-top:30px;}
 
-  .btn{
-    display:inline-flex; align-items:center; gap:10px;
-    text-decoration:none; font-weight:800; font-size:13.5px; letter-spacing:0.07em; text-transform:uppercase;
-    padding:18px 32px; border-radius:2px; transition:background .2s, transform .2s, box-shadow .2s;
-    box-shadow:0 8px 22px rgba(0,0,0,0.18);
-  }
-  .btn::after{content:"→"; font-size:15px; transition:transform .2s;}
-  .btn:hover::after{transform:translateX(3px);}
-  .btn-light{background:#fff; color:var(--ink);}
-  .btn-light:hover{background:var(--wheat); transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,0.24);}
-  .btn-dark{background:var(--ink); color:var(--ivory);}
-  .btn-dark:hover{background:var(--leather); transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,0.3);}
-  .btn-accent{background:var(--leather); color:#fff;}
-  .btn-accent:hover{background:#7E5730; transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,0.3);}
-  .btn-outline{background:transparent; border:1.5px solid rgba(32,27,21,0.35); color:var(--ink); box-shadow:none;}
-  .btn-outline:hover{background:rgba(32,27,21,0.06); transform:translateY(-2px);}
-  .btn-outline::after{display:none;}
-  .btn-outline.on-dark{border-color:rgba(255,255,255,0.5); color:#fff;}
-  .btn-outline.on-dark:hover{background:rgba(255,255,255,0.1);}
-
   /* ---------- FENCE DIVIDER ---------- */
   .fence{width:100%; height:28px; display:block;}
   .fence .rail{stroke:var(--wheat); stroke-width:2;}
   .fence .rail2{stroke:var(--leather); stroke-width:1.5; opacity:0.55;}
 
-  /* ---------- VERSE ---------- */
-  .verse{text-align:center; padding:72px 28px 64px; max-width:720px; margin:0 auto;}
+  /* ---------- VERSE (torn-paper insert with faded logo watermark) ---------- */
+  .verse-wrap{position:relative; background:var(--parchment); overflow:hidden; padding:96px 28px;}
+  .torn-top, .torn-bottom{position:absolute; left:0; right:0; height:26px; background:var(--ivory); z-index:2;}
+  .torn-top{top:0; clip-path:polygon(0 0,100% 0,100% 55%,96% 100%,92% 60%,88% 95%,84% 50%,80% 100%,76% 65%,72% 90%,68% 45%,64% 100%,60% 55%,56% 90%,52% 40%,48% 100%,44% 60%,40% 95%,36% 50%,32% 100%,28% 65%,24% 90%,20% 45%,16% 100%,12% 55%,8% 90%,4% 40%,0% 100%);}
+  .torn-bottom{bottom:0; clip-path:polygon(0 100%,100% 100%,100% 45%,96% 0%,92% 40%,88% 5%,84% 50%,80% 0%,76% 35%,72% 10%,68% 55%,64% 0%,60% 45%,56% 10%,52% 60%,48% 0%,44% 40%,40% 5%,36% 50%,32% 0%,28% 35%,24% 10%,20% 55%,16% 0%,12% 45%,8% 10%,4% 60%,0% 0%);}
+  .verse-logo-bg{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-3deg);
+    width:560px; max-width:150%; opacity:0.11; mix-blend-mode:multiply;
+    filter:grayscale(1) contrast(1.15); pointer-events:none; z-index:0;
+  }
+  .verse{position:relative; z-index:1; text-align:center; max-width:720px; margin:0 auto;}
   .verse p{font-family:'Fraunces', serif; font-style:italic; font-weight:500; font-size:clamp(20px,2.4vw,26px);}
   .verse cite{display:block; margin-top:14px; font-style:normal; font-weight:700; font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--leather);}
 
@@ -154,10 +176,16 @@
   .section-head h2{font-size:clamp(28px,3.8vw,40px); margin-top:12px;}
   .section-head p{color:var(--ink-soft); margin-top:16px;}
 
-  /* ---------- ABOUT (editorial split) ---------- */
+  /* ---------- ABOUT (editorial split, weathered photo) ---------- */
   .about{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:0.95fr 1.05fr; gap:60px; align-items:center;}
-  .about-photo{aspect-ratio:4/5; border:1px solid var(--line); padding:8px; background:var(--card);}
-  .about-photo .frame{width:100%; height:100%; overflow:hidden;}
+  .about-photo{
+    aspect-ratio:4/5; transform:rotate(-1.5deg);
+    filter:drop-shadow(0 18px 30px rgba(32,27,21,0.22));
+  }
+  .about-photo img{
+    mask-image:radial-gradient(ellipse 78% 78% at center, black 50%, transparent 100%);
+    -webkit-mask-image:radial-gradient(ellipse 78% 78% at center, black 50%, transparent 100%);
+  }
   .about-story h2{font-size:clamp(28px,3.6vw,38px);}
   .about-story p{color:var(--ink-soft); margin-top:18px;}
   .values-list{list-style:none; margin:28px 0 0; padding:0; border-top:1px solid var(--line);}
@@ -187,7 +215,7 @@
   .prop-list li{padding:13px 0; border-bottom:1px solid var(--line); display:flex; gap:14px; align-items:flex-start; font-size:15px;}
   .prop-list li::before{content:""; flex:0 0 auto; width:8px; height:8px; margin-top:6px; background:var(--wheat); transform:rotate(45deg);}
 
-  /* ---------- GALLERY (little section) ---------- */
+  /* ---------- GALLERY ---------- */
   .gallery-grid{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
   .gallery-grid a{display:block; aspect-ratio:1/1; overflow:hidden;}
   .gallery-grid img{transition:transform .5s ease;}
@@ -203,10 +231,9 @@
   .section-dark .section-head p{color:rgba(247,242,233,0.68);}
   .section-dark .prop-list li{color:rgba(247,242,233,0.88); border-bottom-color:rgba(247,242,233,0.14);}
   .section-dark .prop-list li::before{background:var(--wheat);}
-  .section-dark .tag-row span{border-color:rgba(247,242,233,0.28); color:rgba(247,242,233,0.82);}
 
   /* subtle depth on cards */
-  .exp-grid, .about-photo, .visit-card, .contact-card{box-shadow:0 14px 40px rgba(32,27,21,0.10);}
+  .exp-grid, .visit-card, .contact-card, .map-frame{box-shadow:0 14px 40px rgba(32,27,21,0.10);}
 
   /* film-grain texture, applied site-wide */
   .grain{
@@ -215,9 +242,24 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* ---------- FUTURE ---------- */
+  /* ---------- FUTURE (interactive bubbles) ---------- */
   .tag-row{max-width:var(--max); margin:0 auto; display:flex; flex-wrap:wrap; gap:12px; justify-content:center;}
-  .tag-row span{border:1px solid var(--line); padding:11px 20px; border-radius:999px; font-size:14px; font-weight:600; color:var(--ink-soft);}
+  .tag-btn{
+    font-family:'Karla', sans-serif; border:1px solid rgba(247,242,233,0.28); background:transparent;
+    padding:12px 22px; border-radius:999px; font-size:14px; font-weight:600; color:rgba(247,242,233,0.82);
+    cursor:pointer; transition:background .2s, color .2s, border-color .2s;
+  }
+  .tag-btn:hover{border-color:var(--wheat); color:#fff;}
+  .tag-btn.active{background:var(--wheat); color:var(--ink); border-color:var(--wheat);}
+  .tag-desc{
+    max-width:620px; margin:0 auto; text-align:center; font-size:15.5px; line-height:1.7;
+    color:rgba(247,242,233,0.85); max-height:0; opacity:0; overflow:hidden; transition:max-height .35s ease, opacity .3s ease, margin .35s ease;
+  }
+  .tag-desc.open{max-height:200px; opacity:1; margin-top:26px;}
+
+  /* ---------- MAP ---------- */
+  .map-frame{max-width:720px; margin:0 auto 32px; border:1px solid var(--line); overflow:hidden; background:var(--card);}
+  .map-frame iframe{width:100%; height:340px; display:block; border:0;}
 
   /* ---------- VISIT ---------- */
   .visit-card{max-width:520px; margin:0 auto; background:var(--card); border:1px solid var(--line); padding:40px;}
@@ -240,7 +282,7 @@
   }
   .contact-form input:focus, .contact-form textarea:focus{outline:2px solid var(--wheat); outline-offset:1px;}
   .contact-form textarea{min-height:120px; resize:vertical;}
-  .contact-form button{cursor:pointer; border:none; margin-top:4px;}
+  .contact-form button{width:100%; justify-content:center; margin-top:4px;}
   .form-status{font-size:14px; margin-top:10px; text-align:center; min-height:20px;}
   .form-status.success{color:var(--sage-deep); font-weight:700;}
   .form-status.error{color:#a13d2e; font-weight:700;}
@@ -263,7 +305,8 @@
     .gallery-grid{grid-template-columns:repeat(2,1fr);}
     section.content{padding:16px 20px 64px;}
     .hero-content{padding-bottom:64px;}
-    .visit-card{padding:28px;}
+    .visit-card, .contact-card{padding:28px;}
+    .verse-wrap{padding:76px 20px;}
   }
 </style>
 </head>
@@ -276,9 +319,9 @@
   </a>
   <nav id="mainNav">
     <button type="button" id="navCloseBtn" class="nav-close-btn" aria-label="Close menu">✕</button>
-    <a href="#about">About</a>
     <a href="#experiences">Experiences</a>
     <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
     <a href="#visit" class="nav-cta">Plan Your Visit</a>
   </nav>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
@@ -296,46 +339,12 @@
   </div>
 </section>
 
-<!-- VERSE -->
-<div class="verse">
-  <p>"Commit to the Lord whatever you do, and He will establish your plans."</p>
-  <cite>Proverbs 16:3</cite>
-</div>
-
 <svg class="fence" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true">
   <line class="rail" x1="0" y1="9" x2="1200" y2="9"/>
   <line class="rail2" x1="0" y1="19" x2="1200" y2="19"/>
 </svg>
 
-<!-- ABOUT -->
-<section class="content" id="about">
-  <div class="about">
-    <div class="about-photo">
-      <div class="frame">
-        <img class="photo" src="1000023096.jpg" alt="Outdoor round pen at Yahweh Arena under a clear blue sky">
-      </div>
-    </div>
-    <div class="about-story">
-      <div class="eyebrow">Our Story</div>
-      <h2>Built With Faith, and a Love for Horses</h2>
-      <p>Yahweh Arena began with a simple conviction: that a peaceful stretch of Minnesota countryside could become a place where people gather, celebrate, and grow — together. What started as a love for horses grew into a destination built for community, one arena, one event, one ride at a time.</p>
-      <p>We believe every good gift comes from God, and we're grateful for the chance to share this place. Whether you're here to say "I do," host a family reunion, learn to ride, or simply enjoy the quiet of the countryside, our hope is that you leave encouraged.</p>
-      <ul class="values-list">
-        <li>Faith First <span>The foundation everything is built on</span></li>
-        <li>Hospitality <span>Every guest welcomed like family</span></li>
-        <li>Stewardship <span>Caring well for this land and these horses</span></li>
-        <li>Excellence <span>Details that make an event unforgettable</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<svg class="fence" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true">
-  <line class="rail" x1="0" y1="9" x2="1200" y2="9"/>
-  <line class="rail2" x1="0" y1="19" x2="1200" y2="19"/>
-</svg>
-
-<!-- EXPERIENCES -->
+<!-- EXPERIENCES (what we have, first) -->
 <section class="content" id="experiences">
   <div class="section-head">
     <div class="eyebrow">What's Here</div>
@@ -386,7 +395,7 @@
   </div>
 </section>
 
-<!-- PROPERTY -->
+<!-- PROPERTY (amenities, dark) -->
 <section class="content section-dark" id="property">
   <div class="section-head">
     <div class="eyebrow">The Property</div>
@@ -428,31 +437,18 @@
   <line class="rail2" x1="0" y1="19" x2="1200" y2="19"/>
 </svg>
 
-<!-- FUTURE -->
-<section class="content section-dark" style="padding-top:56px;">
-  <div class="section-head">
-    <div class="eyebrow">Growing With Purpose</div>
-    <h2>What's Coming Next</h2>
-    <p>As Yahweh Arena grows, so does our hope for what this place can offer the community around it.</p>
-  </div>
-  <div class="tag-row">
-    <span>Equine-Assisted Therapy</span>
-    <span>Riding Lessons</span>
-    <span>Youth Camps</span>
-    <span>Women's Retreats</span>
-    <span>Faith-Based Retreats</span>
-    <span>Community Outreach</span>
-    <span>Educational Workshops</span>
-  </div>
-</section>
-
-<!-- VISIT -->
+<!-- VISIT: find us + contact (map first) -->
 <section class="content" id="visit">
   <div class="section-head">
     <div class="eyebrow">Come See It Yourself</div>
-    <h2>Ready to Gather Here?</h2>
-    <p>Call to schedule your visit or talk through your event — we'd love to walk the property with you.</p>
+    <h2>Find Us &amp; Get In Touch</h2>
+    <p>28319 285th Ave, Long Prairie, MN — call to schedule your visit or send us a message below.</p>
   </div>
+
+  <div class="map-frame">
+    <iframe src="https://www.google.com/maps?q=28319+285th+Ave,+Long+Prairie,+MN&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map to Yahweh Arena"></iframe>
+  </div>
+
   <div class="visit-card">
     <h3>Visit Yahweh Arena</h3>
     <dl>
@@ -479,19 +475,70 @@
       <input type="email" name="email" placeholder="Your email" required>
       <input type="tel" name="phone" placeholder="Phone (optional)">
       <textarea name="message" placeholder="Tell us about your event or question" required></textarea>
-      <button type="submit" class="btn btn-accent" style="justify-content:center; width:100%;">Send Message</button>
+      <button type="submit" class="btn btn-accent">Send Message</button>
       <p class="form-status" id="formStatus"></p>
     </form>
   </div>
+</section>
+
+<!-- VERSE (torn-paper insert with faded logo watermark) -->
+<div class="verse-wrap">
+  <div class="torn-top"></div>
+  <img class="verse-logo-bg" src="1000023288.png" alt="" aria-hidden="true">
+  <div class="verse">
+    <p>"Commit to the Lord whatever you do, and He will establish your plans."</p>
+    <cite>Proverbs 16:3</cite>
+  </div>
+  <div class="torn-bottom"></div>
+</div>
+
+<!-- ABOUT (our story, further down) -->
+<section class="content" id="about">
+  <div class="about">
+    <div class="about-photo">
+      <img class="photo" src="1000023096.jpg" alt="Outdoor round pen at Yahweh Arena under a clear blue sky">
+    </div>
+    <div class="about-story">
+      <div class="eyebrow">Our Story</div>
+      <h2>Built With Faith, and a Love for Horses</h2>
+      <p>Yahweh Arena began with a simple conviction: that a peaceful stretch of Minnesota countryside could become a place where people gather, celebrate, and grow — together. What started as a love for horses grew into a destination built for community, one arena, one event, one ride at a time.</p>
+      <p>We believe every good gift comes from God, and we're grateful for the chance to share this place. Whether you're here to say "I do," host a family reunion, learn to ride, or simply enjoy the quiet of the countryside, our hope is that you leave encouraged.</p>
+      <ul class="values-list">
+        <li>Faith First <span>The foundation everything is built on</span></li>
+        <li>Hospitality <span>Every guest welcomed like family</span></li>
+        <li>Stewardship <span>Caring well for this land and these horses</span></li>
+        <li>Excellence <span>Details that make an event unforgettable</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURE (interactive bubbles) -->
+<section class="content section-dark" style="padding-top:56px;">
+  <div class="section-head">
+    <div class="eyebrow">Growing With Purpose</div>
+    <h2>What's Coming Next</h2>
+    <p>As Yahweh Arena grows, so does our hope for what this place can offer the community around it. Tap an idea below to see how the space adapts.</p>
+  </div>
+  <div class="tag-row" id="futureTags">
+    <button type="button" class="tag-btn" data-desc="Our indoor arena and round pen convert easily into a calm, controlled space for therapy sessions — built for horses and the people who need them.">Equine-Assisted Therapy</button>
+    <button type="button" class="tag-btn" data-desc="The same arena used for open ride becomes a dedicated lesson space, with obstacles and equipment already on hand for structured instruction.">Riding Lessons</button>
+    <button type="button" class="tag-btn" data-desc="A wide open arena floor, an outdoor round pen, and RV parking make it easy to host multi-day camps with room to ride, gather, and stay.">Youth Camps</button>
+    <button type="button" class="tag-btn" data-desc="The venue's open floor plan shifts easily from arena to gathering space — ideal for teaching, worship, and fellowship together.">Women's Retreats</button>
+    <button type="button" class="tag-btn" data-desc="A quiet countryside setting built for reflection, with room to gather large or small groups together under one roof.">Faith-Based Retreats</button>
+    <button type="button" class="tag-btn" data-desc="The open arena and grounds flex to host food drives, fundraisers, and neighborhood events without needing a separate facility.">Community Outreach</button>
+    <button type="button" class="tag-btn" data-desc="Arena space doubles as a hands-on classroom — horses, tools, and room to learn, all in one place.">Educational Workshops</button>
+  </div>
+  <div class="tag-desc" id="futureDesc"></div>
 </section>
 
 <footer>
   <img class="logo-mark" src="1000023288.png" alt="Yahweh Arena">
   <div class="contact-line">28319 285th Ave, Long Prairie, Minnesota &nbsp;·&nbsp; <a href="tel:+12182328377">(218) 232-8377</a> &nbsp;·&nbsp; <a href="mailto:arenayahweh@gmail.com">arenayahweh@gmail.com</a></div>
   <nav>
-    <a href="#about">About</a>
     <a href="#experiences">Experiences</a>
     <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
     <a href="#visit">Visit</a>
   </nav>
 </footer>
@@ -501,6 +548,7 @@
   var toggle = document.getElementById('navToggle');
   var nav = document.getElementById('mainNav');
   var navClose = document.getElementById('navCloseBtn');
+  var lockedScrollY = 0;
 
   window.addEventListener('scroll', function () {
     if (!nav.classList.contains('open')) {
@@ -509,9 +557,13 @@
   }, { passive: true });
 
   function openMenu() {
+    lockedScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    document.body.style.position = 'fixed';
+    document.body.style.top = (-lockedScrollY) + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
     nav.classList.add('open');
     header.classList.add('menu-open');
-    document.body.classList.add('nav-locked');
     toggle.textContent = '✕';
     toggle.setAttribute('aria-expanded', 'true');
   }
@@ -519,10 +571,14 @@
   function closeMenu() {
     nav.classList.remove('open');
     header.classList.remove('menu-open');
-    document.body.classList.remove('nav-locked');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    window.scrollTo(0, lockedScrollY);
     toggle.textContent = '☰';
     toggle.setAttribute('aria-expanded', 'false');
-    header.classList.toggle('is-scrolled', window.scrollY > 30);
+    header.classList.toggle('is-scrolled', lockedScrollY > 30);
   }
 
   toggle.addEventListener('click', function () {
@@ -537,6 +593,23 @@
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && nav.classList.contains('open')) { closeMenu(); }
+  });
+
+  var tagBtns = document.querySelectorAll('.tag-btn');
+  var descPanel = document.getElementById('futureDesc');
+  tagBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var wasActive = btn.classList.contains('active');
+      tagBtns.forEach(function (b) { b.classList.remove('active'); });
+      if (wasActive) {
+        descPanel.classList.remove('open');
+        descPanel.textContent = '';
+      } else {
+        btn.classList.add('active');
+        descPanel.textContent = btn.getAttribute('data-desc');
+        descPanel.classList.add('open');
+      }
+    });
   });
 
   var contactForm = document.getElementById('contactForm');
