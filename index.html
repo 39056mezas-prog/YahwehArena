@@ -95,6 +95,7 @@
     color:#fff; font-family:'Karla', sans-serif; font-weight:700; font-size:21px;
     text-decoration:none; text-shadow:0 2px 12px rgba(0,0,0,0.4);
   }
+  .mobile-nav-logo{height:56px; width:auto; margin-bottom:10px; filter:brightness(0) invert(1);}
   .mobile-nav a.nav-cta{
     background:var(--wheat); color:var(--ink); padding:14px 30px; text-shadow:none;
     clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
@@ -282,7 +283,7 @@
   .visit-note{font-size:13px; color:var(--ink-soft); margin-top:18px; font-style:italic; text-align:center;}
 
   /* ---------- CONTACT FORM ---------- */
-  .contact-card{max-width:520px; margin:20px auto 0; background:var(--card); border:1px solid var(--line); padding:40px;}
+  .contact-card{max-width:520px; margin:0 auto; background:var(--card); border:1px solid var(--line); padding:40px;}
   .contact-card h3{font-size:23px; margin-bottom:6px;}
   .contact-card .eyebrow{display:block; margin-bottom:8px;}
   .contact-form{margin-top:22px; display:flex; flex-direction:column; gap:14px;}
@@ -338,6 +339,7 @@
 
 <div class="mobile-nav" id="mobileNav">
   <button type="button" id="navCloseBtn" class="nav-close-btn" aria-label="Close menu">✕</button>
+  <img class="mobile-nav-logo" src="1000023288.png" alt="Yahweh Arena">
   <a href="#experiences">Experiences</a>
   <a href="#gallery">Gallery</a>
   <a href="#about">About</a>
@@ -463,7 +465,7 @@
   </div>
 
   <div class="map-frame">
-    <iframe src="https://www.google.com/maps?q=28319+285th+Ave,+Long+Prairie,+MN&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map to Yahweh Arena"></iframe>
+    <iframe src="https://www.google.com/maps?q=28319+285th+Ave,+Long+Prairie,+MN&t=k&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map to Yahweh Arena"></iframe>
   </div>
 
   <div class="visit-card">
@@ -479,22 +481,6 @@
       <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=28319+285th+Ave+Long+Prairie+MN" target="_blank" rel="noopener">Get Directions</a>
     </div>
     <p class="visit-note">Call to schedule a visit or ask about booking your event.</p>
-  </div>
-
-  <div class="contact-card">
-    <span class="eyebrow">Or Send a Message</span>
-    <h3>We'll Get Back to You</h3>
-    <form id="contactForm" class="contact-form">
-      <input type="hidden" name="access_key" value="29419777-08a3-41c6-a496-9688bf505bed">
-      <input type="hidden" name="subject" value="New inquiry from the Yahweh Arena website">
-      <input type="hidden" name="from_name" value="Yahweh Arena Website">
-      <input type="text" name="name" placeholder="Your name" required>
-      <input type="email" name="email" placeholder="Your email" required>
-      <input type="tel" name="phone" placeholder="Phone (optional)">
-      <textarea name="message" placeholder="Tell us about your event or question" required></textarea>
-      <button type="submit" class="btn btn-accent">Send Message</button>
-      <p class="form-status" id="formStatus"></p>
-    </form>
   </div>
 </section>
 
@@ -549,6 +535,28 @@
   <div class="tag-desc" id="futureDesc"></div>
 </section>
 
+<!-- CONTACT (last thing before the footer) -->
+<section class="content" id="contact">
+  <div class="section-head">
+    <div class="eyebrow">Let's Talk</div>
+    <h2>Tell Us What You're Dreaming Up</h2>
+    <p>A wedding, a family reunion, a clinic, or just a question about riding — tell us a little about it and we'll follow up personally.</p>
+  </div>
+  <div class="contact-card">
+    <form id="contactForm" class="contact-form">
+      <input type="hidden" name="access_key" value="29419777-08a3-41c6-a496-9688bf505bed">
+      <input type="hidden" name="subject" value="New inquiry from the Yahweh Arena website">
+      <input type="hidden" name="from_name" value="Yahweh Arena Website">
+      <input type="text" name="name" placeholder="Full name" required>
+      <input type="email" name="email" placeholder="Email address" required>
+      <input type="tel" name="phone" placeholder="Phone (optional)">
+      <textarea name="message" placeholder="What are you planning? A date, a headcount, a question — whatever you've got." required></textarea>
+      <button type="submit" class="btn btn-accent">Send Your Message</button>
+      <p class="form-status" id="formStatus"></p>
+    </form>
+  </div>
+</section>
+
 <footer>
   <img class="logo-mark" src="1000023288.png" alt="Yahweh Arena">
   <div class="contact-line">28319 285th Ave, Long Prairie, Minnesota &nbsp;·&nbsp; <a href="tel:+12182328377">(218) 232-8377</a> &nbsp;·&nbsp; <a href="mailto:arenayahweh@gmail.com">arenayahweh@gmail.com</a></div>
@@ -557,6 +565,7 @@
     <a href="#gallery">Gallery</a>
     <a href="#about">About</a>
     <a href="#visit">Visit</a>
+    <a href="#contact">Contact</a>
   </nav>
 </footer>
 
