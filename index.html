@@ -865,13 +865,14 @@
     toggle.setAttribute('aria-expanded', 'true');
   }
 
-  function closeMenu() {
+  function closeMenu(restoreScroll) {
+    if (restoreScroll === undefined) { restoreScroll = true; }
     nav.classList.remove('open');
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.left = '';
     document.body.style.right = '';
-    window.scrollTo(0, lockedScrollY);
+    if (restoreScroll) { window.scrollTo(0, lockedScrollY); }
     toggle.textContent = '☰';
     toggle.setAttribute('aria-expanded', 'false');
   }
@@ -880,14 +881,40 @@
     if (nav.classList.contains('open')) { closeMenu(); } else { openMenu(); }
   });
 
-  if (navClose) { navClose.addEventListener('click', closeMenu); }
-
-  nav.querySelectorAll('a').forEach(function (link) {
-    link.addEventListener('click', closeMenu);
-  });
+  if (navClose) { navClose.addEventListener('click', function () { closeMenu(); }); }
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && nav.classList.contains('open')) { closeMenu(); }
+  });
+
+  // Every in-page "#section" link (header nav, mobile nav, footer nav, and any
+  // button anywhere on the page) scrolls smoothly without ever touching the
+  // URL bar — no #hash ever gets appended to yahweharena.com.
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href^="#"]');
+    if (!link || link.hasAttribute('aria-disabled')) return;
+    var hash = link.getAttribute('href');
+    if (!hash) return;
+
+    var menuWasOpen = nav.classList.contains('open');
+
+    if (hash === '#') {
+      e.preventDefault();
+      if (menuWasOpen) { closeMenu(false); }
+      requestAnimationFrame(function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      return;
+    }
+
+    var target = document.getElementById(hash.slice(1));
+    if (!target) return;
+
+    e.preventDefault();
+    if (menuWasOpen) { closeMenu(false); }
+    requestAnimationFrame(function () {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   });
 
   var tagBtns = document.querySelectorAll('.tag-btn');
