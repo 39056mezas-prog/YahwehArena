@@ -175,7 +175,7 @@
   .torn-bottom{bottom:0; clip-path:polygon(0 100%,100% 100%,100% 45%,96% 0%,92% 40%,88% 5%,84% 50%,80% 0%,76% 35%,72% 10%,68% 55%,64% 0%,60% 45%,56% 10%,52% 60%,48% 0%,44% 40%,40% 5%,36% 50%,32% 0%,28% 35%,24% 10%,20% 55%,16% 0%,12% 45%,8% 10%,4% 60%,0% 0%);}
   .verse-logo-bg{
     position:absolute; top:-10px; right:-50px; left:auto; transform:rotate(-4deg);
-    width:420px; max-width:62%; opacity:0.13; mix-blend-mode:multiply;
+    width:420px; max-width:62%; opacity:0.05; mix-blend-mode:multiply;
     filter:grayscale(1) contrast(1.15); pointer-events:none; z-index:0;
   }
   .verse{position:relative; z-index:1; text-align:center; max-width:720px; margin:0 auto;}
@@ -207,9 +207,19 @@
   }
   .values-list li span{font-family:'Karla', sans-serif; font-weight:400; font-size:14px; color:var(--ink-soft); text-align:right; max-width:52%;}
 
-  /* ---------- EXPERIENCES ---------- */
-  .exp-grid{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
-  .exp-card{background:var(--card); display:flex; flex-direction:column;}
+  /* ---------- EXPERIENCES (horizontal scroll) ---------- */
+  .exp-grid{
+    max-width:var(--max); margin:0 auto; display:flex; gap:16px;
+    overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+    padding:4px 4px 16px; scrollbar-width:thin; scrollbar-color:var(--wheat) transparent;
+  }
+  .exp-grid::-webkit-scrollbar{height:6px;}
+  .exp-grid::-webkit-scrollbar-thumb{background:var(--wheat); border-radius:99px;}
+  .exp-card{
+    background:var(--card); border:1px solid var(--line); display:flex; flex-direction:column;
+    flex:0 0 82%; max-width:360px; scroll-snap-align:start;
+    box-shadow:0 10px 28px rgba(32,27,21,0.08);
+  }
   .exp-photo{aspect-ratio:5/4; overflow:hidden;}
   .exp-body{padding:28px 26px 32px; display:flex; flex-direction:column; flex-grow:1;}
   .exp-top{display:flex; justify-content:space-between; align-items:center;}
@@ -219,6 +229,10 @@
   .exp-meta{list-style:none; margin:18px 0 0; padding:14px 0 0; border-top:1px solid var(--line); font-size:13.5px; color:var(--ink-soft);}
   .exp-meta li{padding:3px 0;}
   .exp-meta li::before{content:"— "; color:var(--wheat); font-weight:700;}
+  .scroll-hint{
+    text-align:center; font-size:12.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--ink-soft); margin-top:6px; opacity:0.65;
+  }
 
   /* ---------- PROPERTY ---------- */
   .prop-grid{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:repeat(2,1fr); column-gap:56px;}
@@ -261,16 +275,6 @@
   .lightbox-prev{left:16px;}
   .lightbox-next{right:16px;}
 
-  /* ---------- FACEBOOK CALLOUT ---------- */
-  .fb-callout{
-    max-width:680px; margin:0 auto; background:var(--card); border:1px solid var(--line);
-    padding:40px; display:flex; align-items:center; gap:24px;
-  }
-  .fb-callout .fb-icon{flex:0 0 auto; width:52px; height:52px;}
-  .fb-callout h3{font-size:21px;}
-  .fb-callout p{color:var(--ink-soft); margin-top:6px; font-size:15px;}
-  .fb-callout .btn{margin-top:16px;}
-
   /* ---------- DARK SECTION MODIFIER ---------- */
   .section-dark{
     background:radial-gradient(ellipse at top, #2A2318 0%, #1C170F 70%);
@@ -282,36 +286,15 @@
   .section-dark .prop-list li{color:rgba(247,242,233,0.88); border-bottom-color:rgba(247,242,233,0.14);}
   .section-dark .prop-list li::before{background:var(--wheat);}
 
-  /* ---------- PROPERTY (winter feature) ---------- */
+  /* ---------- PROPERTY (feature highlight, brand-warm) ---------- */
   .section-winter{
     position:relative; overflow:hidden;
-    background:radial-gradient(ellipse at top, #2E3B44 0%, #141C22 72%);
+    background:radial-gradient(ellipse at top, #2A2318 0%, #1C170F 70%);
     color:var(--ivory);
   }
-  .section-winter .eyebrow{color:#9FD1E8;}
+  .section-winter .eyebrow{color:var(--wheat);}
   .section-winter h2{color:#fff;}
   .section-winter .section-head p{color:rgba(247,242,233,0.7);}
-  .snow-layer{
-    position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0.85;
-    background-image:
-      radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9) 50%, transparent 51%),
-      radial-gradient(1.5px 1.5px at 30% 60%, rgba(255,255,255,0.7) 50%, transparent 51%),
-      radial-gradient(2px 2px at 50% 30%, rgba(255,255,255,0.85) 50%, transparent 51%),
-      radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.6) 50%, transparent 51%),
-      radial-gradient(2.5px 2.5px at 85% 15%, rgba(255,255,255,0.9) 50%, transparent 51%),
-      radial-gradient(1.5px 1.5px at 15% 85%, rgba(255,255,255,0.7) 50%, transparent 51%),
-      radial-gradient(2px 2px at 60% 50%, rgba(255,255,255,0.8) 50%, transparent 51%),
-      radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.65) 50%, transparent 51%),
-      radial-gradient(2px 2px at 40% 10%, rgba(255,255,255,0.85) 50%, transparent 51%),
-      radial-gradient(1.5px 1.5px at 25% 40%, rgba(255,255,255,0.7) 50%, transparent 51%);
-    background-repeat:repeat; background-size:220px 260px;
-    animation:snowfall 16s linear infinite;
-  }
-  @keyframes snowfall{
-    from{background-position:0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;}
-    to{background-position:60px 260px, 40px 260px, 80px 260px, 30px 260px, 70px 260px, 50px 260px, 90px 260px, 35px 260px, 65px 260px, 45px 260px;}
-  }
-  @media (prefers-reduced-motion: reduce){ .snow-layer{animation:none;} }
 
   .feature-hero{
     position:relative; z-index:2; max-width:var(--max); margin:0 auto 20px;
@@ -320,12 +303,12 @@
   }
   .feature-hero .icon-wrap{
     flex:0 0 auto; width:76px; height:76px; border-radius:50%;
-    background:rgba(159,209,232,0.14); display:flex; align-items:center; justify-content:center;
+    background:rgba(216,180,106,0.14); display:flex; align-items:center; justify-content:center;
   }
   .feature-hero .icon-wrap svg{width:38px; height:38px;}
   .feature-hero .tag{
     display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
-    color:#141C22; background:#9FD1E8; padding:5px 12px; border-radius:999px; margin-bottom:10px;
+    color:var(--ink); background:var(--wheat); padding:5px 12px; border-radius:999px; margin-bottom:10px;
   }
   .feature-hero h3{font-size:24px; color:#fff;}
   .feature-hero p{color:rgba(247,242,233,0.78); margin-top:10px; font-size:15.5px; max-width:60ch;}
@@ -404,16 +387,14 @@
     color:rgba(247,242,233,0.68);
   }
   footer .logo-mark{height:38px; margin:0 auto 14px; filter:brightness(0) invert(1);}
-  footer .contact-line{margin-bottom:20px;}
-  footer .contact-line a{text-decoration:none; font-weight:700; color:#fff;}
-  footer .social-row{display:flex; justify-content:center; gap:12px; margin-bottom:22px;}
-  footer .social-btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:38px; height:38px; border-radius:50%; overflow:hidden;
-    transition:transform .2s, opacity .2s; opacity:0.9;
-  }
-  footer .social-btn:hover{transform:translateY(-2px); opacity:1;}
-  footer .social-btn svg{width:100%; height:100%;}
+  footer .address-line{margin-bottom:22px;}
+  footer .address-line a{text-decoration:none; font-weight:700; color:#fff;}
+  footer .address-line a:hover{color:var(--wheat);}
+  footer .call-btn{margin-bottom:26px;}
+  footer .social-row{display:flex; justify-content:center; gap:10px; margin-bottom:26px; font-size:13px;}
+  footer .social-row a{text-decoration:none; font-weight:700; color:rgba(247,242,233,0.82); letter-spacing:0.03em;}
+  footer .social-row a:hover{color:#fff;}
+  footer .social-row span{color:rgba(247,242,233,0.35);}
   footer nav{display:flex; flex-wrap:wrap; gap:18px; justify-content:center;}
   footer nav a{text-decoration:none; font-weight:700; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:rgba(247,242,233,0.82);}
   footer nav a:hover{color:#fff;}
@@ -421,9 +402,11 @@
   section[id]{scroll-margin-top:90px;}
 
   /* ---------- RESPONSIVE ---------- */
+  @media (min-width:641px){
+    .exp-card{flex:0 0 340px;}
+  }
   @media (max-width:900px){
     .about{grid-template-columns:1fr; gap:32px;}
-    .exp-grid{grid-template-columns:1fr;}
     .prop-grid{grid-template-columns:1fr; row-gap:0;}
     .gallery-grid{grid-template-columns:repeat(2,1fr);}
     section.content{padding:16px 20px 64px;}
@@ -483,6 +466,7 @@
     <div class="eyebrow">What's Here</div>
     <h2>Three Ways to Experience Yahweh Arena</h2>
     <p>Whether you're planning a milestone event or just want to ride, there's a place for you here.</p>
+    <p class="scroll-hint">← Swipe to explore →</p>
   </div>
   <div class="exp-grid">
     <div class="exp-card">
@@ -530,7 +514,6 @@
 
 <!-- PROPERTY (the main highlight: indoor arena beats Minnesota winters) -->
 <section class="content section-winter" id="property">
-  <div class="snow-layer" aria-hidden="true"></div>
   <div class="section-head">
     <div class="eyebrow">Built for Minnesota</div>
     <h2>Ride Through Every Minnesota Season</h2>
@@ -539,7 +522,7 @@
 
   <div class="feature-hero">
     <div class="icon-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#9FD1E8" stroke-width="1.6" stroke-linecap="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--wheat)" stroke-width="1.6" stroke-linecap="round">
         <path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11M12 2l-2 2M12 2l2 2M12 22l-2-2M12 22l2-2M4.5 6.5l2.7.3M4.5 6.5l.9-2.6M19.5 6.5l-2.7.3M19.5 6.5l-.9-2.6M4.5 17.5l2.7-.3M4.5 17.5l.9 2.6M19.5 17.5l-2.7-.3M19.5 17.5l-.9 2.6"/>
       </svg>
     </div>
@@ -602,21 +585,6 @@
       <img src="1000023101.jpg" alt="Exterior of the venue building">
       <span class="gallery-caption">Venue Exterior</span>
     </button>
-  </div>
-</section>
-
-<!-- FACEBOOK -->
-<section class="content" style="padding-top:8px;">
-  <div class="fb-callout">
-    <svg class="fb-icon" viewBox="0 0 48 48" aria-hidden="true">
-      <circle cx="24" cy="24" r="24" fill="#1877F2"/>
-      <path d="M30.5 24.5h-4v14h-5.5v-14h-3v-4.7h3v-3c0-3.6 1.8-6.3 6-6.3h4v4.7h-2.8c-1 0-1.7.6-1.7 1.9v2.7h4.5l-.5 4.7z" fill="#fff"/>
-    </svg>
-    <div>
-      <h3>Find Us on Facebook</h3>
-      <p>Follow along for new photos, upcoming events, and updates straight from the arena.</p>
-      <a class="btn btn-accent" href="https://www.facebook.com/share/14rPKS74vwC/" target="_blank" rel="noopener">Visit Our Page</a>
-    </div>
   </div>
 </section>
 
@@ -732,14 +700,14 @@
 
 <footer>
   <img class="logo-mark" src="1000023288.png" alt="Yahweh Arena">
-  <div class="contact-line">28319 285th Ave, Long Prairie, Minnesota &nbsp;·&nbsp; <a href="tel:+12182328377">(218) 232-8377</a> &nbsp;·&nbsp; <a href="mailto:arenayahweh@gmail.com">arenayahweh@gmail.com</a></div>
+  <div class="address-line">
+    <a href="https://www.google.com/maps/search/?api=1&query=28319+285th+Ave+Long+Prairie+MN" target="_blank" rel="noopener">28319 285th Ave, Long Prairie, Minnesota</a>
+  </div>
+  <a class="btn btn-accent call-btn" href="tel:+12182328377">Call (218) 232-8377</a>
   <div class="social-row">
-    <a class="social-btn" href="https://www.facebook.com/share/14rPKS74vwC/" target="_blank" rel="noopener" aria-label="Yahweh Arena on Facebook">
-      <svg viewBox="0 0 48 48" aria-hidden="true">
-        <circle cx="24" cy="24" r="24" fill="#1877F2"/>
-        <path d="M30.5 24.5h-4v14h-5.5v-14h-3v-4.7h3v-3c0-3.6 1.8-6.3 6-6.3h4v4.7h-2.8c-1 0-1.7.6-1.7 1.9v2.7h4.5l-.5 4.7z" fill="#fff"/>
-      </svg>
-    </a>
+    <a href="https://www.facebook.com/share/14rPKS74vwC/" target="_blank" rel="noopener">Facebook</a>
+    <span>·</span>
+    <a href="#" onclick="return false;" aria-disabled="true" title="Yelp link coming soon">Yelp</a>
   </div>
   <nav>
     <a href="#experiences">Experiences</a>
