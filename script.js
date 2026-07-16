@@ -170,6 +170,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // ---- Hero slideshow ----
+  var heroSlides = document.querySelectorAll('.hero-slide');
+  var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (heroSlides.length > 1 && !prefersReducedMotion) {
+    var heroIndex = 0;
+    setInterval(function () {
+      heroSlides[heroIndex].classList.remove('active');
+      heroIndex = (heroIndex + 1) % heroSlides.length;
+      heroSlides[heroIndex].classList.add('active');
+    }, 5000);
+  }
+
   // ---- Gallery lightbox ----
   var galleryItems = Array.prototype.slice.call(document.querySelectorAll('.gallery-item'));
   var lightbox = document.getElementById('lightbox');

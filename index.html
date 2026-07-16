@@ -86,7 +86,12 @@
 
 <!-- HERO -->
 <section class="hero">
-  <img class="hero-img photo" src="indoor-arena-wide-shot.jpg" alt="A rider loping across the indoor arena at Yahweh Arena">
+  <div class="hero-slideshow">
+    <img class="hero-img photo hero-slide active" src="indoor-arena-wide-shot.jpg" alt="A rider loping across the indoor arena at Yahweh Arena">
+    <img class="hero-img photo hero-slide" src="arena-building-golden-hour.webp" alt="The arena building at Yahweh Ranch lit by golden hour light">
+    <img class="hero-img photo hero-slide" src="1000023093.jpg" alt="RV parked on site at Yahweh Ranch at dusk">
+    <img class="hero-img photo hero-slide" src="horse-and-dog-pasture.jpg" alt="A horse and the farm dog together in the pasture at Yahweh Ranch">
+  </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="eyebrow">Long Prairie, Minnesota</div>
@@ -140,50 +145,57 @@
   </div>
 </section>
 
+<!-- PRICING CALLOUT -->
+<section class="content" style="padding-top:0; padding-bottom:64px;">
+  <div class="price-banner">
+    <div class="price-tag">
+      <span class="amount">$15</span>
+      <span class="unit">per rider</span>
+    </div>
+    <div class="price-body">
+      <div class="eyebrow">Indoor Open Ride</div>
+      <h3>Ride Today for $15</h3>
+      <p>Open 7 days a week in our fully enclosed 80' x 120' arena — excellent ventilation, room for ~10 horses, bring your own horse and tack.</p>
+    </div>
+    <a class="btn btn-accent" href="/riding">Learn More</a>
+  </div>
+</section>
+
 <svg class="fence" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true">
   <line class="rail" x1="0" y1="9" x2="1200" y2="9"/>
   <line class="rail2" x1="0" y1="19" x2="1200" y2="19"/>
 </svg>
-
-<!-- GALLERY -->
 <section class="content" id="gallery">
   <div class="section-head">
     <div class="eyebrow">In Pictures</div>
     <h2>See It For Yourself</h2>
     <p>A few glimpses of the arena, the grounds, and the horses who call it home — tap any photo for a closer look. More being added soon.</p>
+    <p class="scroll-hint">← Swipe to explore →</p>
   </div>
-  <div class="gallery-grid">
-    <button type="button" class="gallery-item" data-full="1000023092.jpg" data-caption="Inside the Indoor Arena">
-      <img src="1000023092.jpg" alt="Rider inside the indoor arena">
-      <span class="gallery-caption">Indoor Arena</span>
+  <div class="gallery-scroll">
+    <button type="button" class="gallery-item polaroid" style="--tilt:-2deg;" data-full="1000023092.jpg" data-caption="Inside the Indoor Arena">
+      <span class="frame"><img src="1000023092.jpg" alt="Rider inside the indoor arena"></span>
+      <span class="cap">Indoor Arena</span>
     </button>
-    <button type="button" class="gallery-item" data-full="1000023093.jpg" data-caption="RV Site at Dusk">
-      <img src="1000023093.jpg" alt="RV parked on site at dusk">
-      <span class="gallery-caption">RV Site</span>
+    <button type="button" class="gallery-item polaroid" style="--tilt:1.5deg;" data-full="1000023096.jpg" data-caption="The Outdoor Round Pen">
+      <span class="frame"><img src="1000023096.jpg" alt="Outdoor round pen under a clear sky"></span>
+      <span class="cap">Round Pen</span>
     </button>
-    <button type="button" class="gallery-item" data-full="1000023096.jpg" data-caption="The Outdoor Round Pen">
-      <img src="1000023096.jpg" alt="Outdoor round pen under a clear sky">
-      <span class="gallery-caption">Round Pen</span>
+    <button type="button" class="gallery-item polaroid" style="--tilt:-1deg;" data-full="1000023093.jpg" data-caption="RV Site at Dusk">
+      <span class="frame"><img src="1000023093.jpg" alt="RV parked on site at dusk"></span>
+      <span class="cap">RV Site</span>
     </button>
-    <button type="button" class="gallery-item" data-full="1000023101.jpg" data-caption="The Venue, Outside">
-      <img src="1000023101.jpg" alt="Exterior of the venue building">
-      <span class="gallery-caption">Venue Exterior</span>
+    <button type="button" class="gallery-item polaroid" style="--tilt:2deg;" data-full="horse-and-dog-pasture.jpg" data-caption="Horse & Farm Dog">
+      <span class="frame"><img src="horse-and-dog-pasture.jpg" alt="A horse and the farm dog together in the pasture"></span>
+      <span class="cap">Horse &amp; Farm Dog</span>
     </button>
-    <button type="button" class="gallery-item" data-full="horse-and-dog-pasture.jpg" data-caption="Horse & Farm Dog">
-      <img src="horse-and-dog-pasture.jpg" alt="A horse and the farm dog together in the pasture">
-      <span class="gallery-caption">Horse &amp; Farm Dog</span>
+    <button type="button" class="gallery-item polaroid" style="--tilt:-1.5deg;" data-full="sunset-pasture-view.webp" data-caption="Evening on the Farm">
+      <span class="frame"><img src="sunset-pasture-view.webp" alt="Pink sunset sky over the pasture at Yahweh Ranch"></span>
+      <span class="cap">Evening on the Farm</span>
     </button>
-    <button type="button" class="gallery-item" data-full="sunset-pasture-view.webp" data-caption="Evening on the Farm">
-      <img src="sunset-pasture-view.webp" alt="Pink sunset sky over the pasture at Yahweh Ranch">
-      <span class="gallery-caption">Evening on the Farm</span>
-    </button>
-    <button type="button" class="gallery-item" data-full="farm-firepit-sunset.webp" data-caption="Sunset by the Fire Pit">
-      <img src="farm-firepit-sunset.webp" alt="Sunset over the fire pit area on the farm">
-      <span class="gallery-caption">Sunset by the Fire Pit</span>
-    </button>
-    <button type="button" class="gallery-item" data-full="arena-building-golden-hour.webp" data-caption="Golden Hour">
-      <img src="arena-building-golden-hour.webp" alt="The arena building lit by golden hour light">
-      <span class="gallery-caption">Golden Hour</span>
+    <button type="button" class="gallery-item polaroid" style="--tilt:1deg;" data-full="arena-building-golden-hour.webp" data-caption="Golden Hour">
+      <span class="frame"><img src="arena-building-golden-hour.webp" alt="The arena building lit by golden hour light"></span>
+      <span class="cap">Golden Hour</span>
     </button>
   </div>
 </section>
@@ -194,7 +206,9 @@
 </svg>
 
 <!-- FAQ -->
-<section class="content" id="faq">
+<section class="content faq-dark" id="faq">
+  <img class="section-bg-photo" src="farm-firepit-sunset.webp" alt="" aria-hidden="true">
+  <div class="section-bg-overlay"></div>
   <div class="section-head">
     <div class="eyebrow">Good to Know</div>
     <h2>Frequently Asked Questions</h2>
