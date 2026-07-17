@@ -165,15 +165,6 @@ h1,h2,h3{font-family:'Fraunces', serif; font-weight:600; line-height:1.06; margi
 .hero-content p{color:rgba(255,255,255,0.9); font-size:17.5px; margin-top:18px; max-width:56ch;}
 .hero-actions{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:30px;}
 .hero-actions .btn{margin-top:0;}
-.price-pill{
-  display:inline-flex; align-items:center; gap:8px;
-  background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.4);
-  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
-  color:#fff; text-decoration:none; padding:14px 22px; border-radius:999px;
-  font-size:14px; font-weight:600; transition:background .2s, border-color .2s, transform .2s;
-}
-.price-pill strong{font-family:'Fraunces', serif; font-weight:700; font-size:18px; color:var(--wheat);}
-.price-pill:hover{background:rgba(255,255,255,0.18); border-color:var(--wheat); transform:translateY(-2px);}
 
 /* ---------- FENCE DIVIDER ---------- */
 .fence{width:100%; height:28px; display:block;}
