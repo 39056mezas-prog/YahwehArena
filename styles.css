@@ -178,8 +178,8 @@ h1,h2,h3{font-family:'Fraunces', serif; font-weight:600; line-height:1.06; margi
 .torn-bottom{bottom:0; clip-path:polygon(0 100%,100% 100%,100% 45%,96% 0%,92% 40%,88% 5%,84% 50%,80% 0%,76% 35%,72% 10%,68% 55%,64% 0%,60% 45%,56% 10%,52% 60%,48% 0%,44% 40%,40% 5%,36% 50%,32% 0%,28% 35%,24% 10%,20% 55%,16% 0%,12% 45%,8% 10%,4% 60%,0% 0%);}
 .verse-logo-bg{
   position:absolute; top:-10px; right:-50px; left:auto; transform:rotate(-4deg);
-  width:420px; max-width:62%; opacity:0.35; mix-blend-mode:normal;
-  filter:brightness(0) invert(1); pointer-events:none; z-index:0;
+  width:420px; max-width:62%; opacity:0.09; mix-blend-mode:normal;
+  filter:brightness(0); pointer-events:none; z-index:0;
 }
 .verse{position:relative; z-index:1; text-align:center; max-width:720px; margin:0 auto;}
 .verse p{font-family:'Fraunces', serif; font-style:italic; font-weight:500; font-size:clamp(20px,2.4vw,26px);}
