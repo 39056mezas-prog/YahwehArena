@@ -178,8 +178,8 @@ h1,h2,h3{font-family:'Fraunces', serif; font-weight:600; line-height:1.06; margi
 .torn-bottom{bottom:0; clip-path:polygon(0 100%,100% 100%,100% 45%,96% 0%,92% 40%,88% 5%,84% 50%,80% 0%,76% 35%,72% 10%,68% 55%,64% 0%,60% 45%,56% 10%,52% 60%,48% 0%,44% 40%,40% 5%,36% 50%,32% 0%,28% 35%,24% 10%,20% 55%,16% 0%,12% 45%,8% 10%,4% 60%,0% 0%);}
 .verse-logo-bg{
   position:absolute; top:-10px; right:-50px; left:auto; transform:rotate(-4deg);
-  width:420px; max-width:62%; opacity:0.05; mix-blend-mode:multiply;
-  filter:grayscale(1) contrast(1.15); pointer-events:none; z-index:0;
+  width:420px; max-width:62%; opacity:0.35; mix-blend-mode:normal;
+  filter:brightness(0) invert(1); pointer-events:none; z-index:0;
 }
 .verse{position:relative; z-index:1; text-align:center; max-width:720px; margin:0 auto;}
 .verse p{font-family:'Fraunces', serif; font-style:italic; font-weight:500; font-size:clamp(20px,2.4vw,26px);}
@@ -250,21 +250,27 @@ section.content{padding:88px 28px;}
 .prop-list li{padding:13px 0; border-bottom:1px solid var(--line); display:flex; gap:14px; align-items:flex-start; font-size:15px;}
 .prop-list li::before{content:""; flex:0 0 auto; width:8px; height:8px; margin-top:6px; background:var(--wheat); transform:rotate(45deg);}
 
-/* ---------- GALLERY (horizontal-scroll Polaroids) ---------- */
+/* ---------- GALLERY (horizontal-scroll Polaroids, overlapping deck) ---------- */
 .gallery-scroll{
-  max-width:var(--max); margin:0 auto; display:flex; gap:26px;
+  max-width:var(--max); margin:0 auto; display:flex; gap:0;
   overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
-  padding:10px 10px 30px; scrollbar-width:thin; scrollbar-color:var(--wheat) transparent;
+  padding:24px 40px 40px; scrollbar-width:thin; scrollbar-color:var(--wheat) transparent;
 }
 .gallery-scroll::-webkit-scrollbar{height:6px;}
 .gallery-scroll::-webkit-scrollbar-thumb{background:var(--wheat); border-radius:99px;}
 .polaroid{
-  flex:0 0 auto; width:320px; scroll-snap-align:start; cursor:pointer;
-  background:#FBFAF6; padding:8px 8px 0; border:0;
+  flex:0 0 auto; width:320px; scroll-snap-align:center; cursor:pointer;
+  background:#FBFAF6; padding:8px 8px 0; border:0; position:relative;
   box-shadow:0 14px 30px rgba(32,27,21,0.18), 0 2px 6px rgba(32,27,21,0.1);
-  transform:rotate(var(--tilt, -1.5deg)); transition:transform .3s ease, box-shadow .3s ease;
+  transform:rotate(var(--tilt, -1.5deg)); transition:transform .35s ease, box-shadow .35s ease, margin .35s ease;
+  margin-left:-90px; z-index:1;
 }
-.polaroid:hover{transform:rotate(0deg) scale(1.03); box-shadow:0 20px 40px rgba(32,27,21,0.24);}
+.polaroid:first-child{margin-left:0;}
+.polaroid:hover, .polaroid.in-view{
+  transform:rotate(0deg) scale(1.05);
+  box-shadow:0 24px 48px rgba(32,27,21,0.28);
+  z-index:20;
+}
 .polaroid .frame{display:block; aspect-ratio:1/1; overflow:hidden; background:#e9e4d8;}
 .polaroid .frame img{width:100%; height:100%; object-fit:cover; filter:sepia(0.14) saturate(0.9) contrast(1.03);}
 .polaroid .cap{
@@ -417,6 +423,12 @@ section.content{padding:88px 28px;}
 .owner-bio h2{font-size:clamp(26px,3.4vw,34px);}
 .owner-bio p{color:var(--ink-soft); margin-top:16px; font-size:16.5px;}
 
+/* ---------- SECTION PHOTO (banner image inside a text section) ---------- */
+.section-photo{
+  max-width:680px; margin:0 auto 36px; aspect-ratio:16/9; overflow:hidden;
+  border:1px solid var(--line); box-shadow:0 14px 40px rgba(32,27,21,0.10);
+}
+
 /* ---------- MAP ---------- */
 .map-frame{max-width:720px; margin:0 auto 32px; border:1px solid var(--line); overflow:hidden; background:var(--card);}
 .map-frame iframe{width:100%; height:340px; display:block; border:0;}
@@ -473,7 +485,8 @@ section[id], #verse{scroll-margin-top:90px;}
 @media (max-width:900px){
   .about{grid-template-columns:1fr; gap:32px;}
   .prop-grid{grid-template-columns:1fr; row-gap:0;}
-  .polaroid{width:260px;}
+  .polaroid{width:260px; margin-left:-60px !important;}
+  .polaroid:first-child{margin-left:0 !important;}
   .area-grid{grid-template-columns:1fr;}
   .book-links{grid-template-columns:1fr;}
   section.content{padding:64px 20px;}

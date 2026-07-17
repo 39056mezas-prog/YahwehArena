@@ -170,16 +170,45 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ---- Hero slideshow ----
+  // ---- Hero slideshow (auto-rotates, and responds to a horizontal swipe) ----
   var heroSlides = document.querySelectorAll('.hero-slide');
+  var heroSection = document.querySelector('.hero');
   var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (heroSlides.length > 1 && !prefersReducedMotion) {
+  if (heroSlides.length > 1) {
     var heroIndex = 0;
-    setInterval(function () {
+    var heroTimer = null;
+
+    function goToHeroSlide(index) {
       heroSlides[heroIndex].classList.remove('active');
-      heroIndex = (heroIndex + 1) % heroSlides.length;
+      heroIndex = (index + heroSlides.length) % heroSlides.length;
       heroSlides[heroIndex].classList.add('active');
-    }, 5000);
+    }
+
+    function startHeroTimer() {
+      if (prefersReducedMotion) return;
+      heroTimer = setInterval(function () { goToHeroSlide(heroIndex + 1); }, 5000);
+    }
+    function stopHeroTimer() {
+      if (heroTimer) { clearInterval(heroTimer); heroTimer = null; }
+    }
+
+    startHeroTimer();
+
+    if (heroSection) {
+      var touchStartX = 0;
+      heroSection.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].screenX;
+        stopHeroTimer();
+      }, { passive: true });
+      heroSection.addEventListener('touchend', function (e) {
+        var touchEndX = e.changedTouches[0].screenX;
+        var delta = touchEndX - touchStartX;
+        if (Math.abs(delta) > 40) {
+          if (delta < 0) { goToHeroSlide(heroIndex + 1); } else { goToHeroSlide(heroIndex - 1); }
+        }
+        startHeroTimer();
+      }, { passive: true });
+    }
   }
 
   // ---- Gallery lightbox ----
@@ -218,6 +247,17 @@ document.addEventListener('DOMContentLoaded', function () {
       if (e.key === 'ArrowLeft') { showImage(currentIndex - 1); }
       if (e.key === 'ArrowRight') { showImage(currentIndex + 1); }
     });
+  }
+
+  // ---- Gallery: pop polaroids forward as they scroll into view ----
+  var polaroids = document.querySelectorAll('.polaroid');
+  if (polaroids.length && 'IntersectionObserver' in window) {
+    var polaroidObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        entry.target.classList.toggle('in-view', entry.intersectionRatio > 0.65);
+      });
+    }, { root: document.querySelector('.gallery-scroll'), threshold: [0, 0.65, 1] });
+    polaroids.forEach(function (p) { polaroidObserver.observe(p); });
   }
 
   // ---- FAQ accordion ----
